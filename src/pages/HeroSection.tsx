@@ -471,7 +471,7 @@ function HeroSection() {
           </div>
         </div>
         {/* Second Screen */}
-        <section className="w-screen min-h-[500vh] flex flex-col flex-shrink-0">
+        <section className="min-w-[100vw] bg-[#F5F5F5] min-h-[500vh] flex flex-col flex-shrink-0">
           <Section2 />
         </section>
       </div>

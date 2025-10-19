@@ -2,6 +2,9 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import UnsureServicesSuit from "./UnsureServicesSuit";
 import ClientTestimonial from "./ClientTestimonial";
+import FAQSection from "./Faqs";
+import Contact from "./Contact";
+import Footer from "./Footer";
 
 type Service = {
   id: string;
@@ -81,6 +84,8 @@ function ServiceItem({ service }: { service: Service }) {
   const descRef = useRef<HTMLDivElement | null>(null);
   const exploreRef = useRef<HTMLButtonElement | null>(null);
   const CrmRef = useRef<HTMLDivElement | null>(null);
+  const currentTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const isAnimatingRef = useRef<boolean>(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -114,7 +119,18 @@ function ServiceItem({ service }: { service: Service }) {
     }
 
     const onEnter = () => {
+      // Kill any existing timeline to prevent conflicts
+      if (currentTimelineRef.current) {
+        currentTimelineRef.current.kill();
+        currentTimelineRef.current = null;
+      }
+      
+      // Reset animation state
+      isAnimatingRef.current = true;
+      
       const tl = gsap.timeline();
+      currentTimelineRef.current = tl;
+      
       tl.to(
         [leftB, rightB],
         { x: 0, opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
@@ -164,15 +180,34 @@ function ServiceItem({ service }: { service: Service }) {
       } catch (e) {
         // ignore measurement errors
       }
+      
+      // Clear the timeline reference when animation completes
+      tl.eventCallback("onComplete", () => {
+        currentTimelineRef.current = null;
+        isAnimatingRef.current = false;
+      });
     };
 
     const onLeave = () => {
+      // Kill any existing timeline to prevent conflicts
+      if (currentTimelineRef.current) {
+        currentTimelineRef.current.kill();
+        currentTimelineRef.current = null;
+      }
+      
+      // Reset animation state
+      isAnimatingRef.current = true;
+      
       const tl = gsap.timeline({
         onComplete: () => {
           // After hide animation completes remove the icon from layout
           gsap.set(icon, { display: "none" });
+          currentTimelineRef.current = null;
+          isAnimatingRef.current = false;
         },
       });
+      
+      currentTimelineRef.current = tl;
 
       tl.to(
         [leftB, rightB, desc, explore],
@@ -208,10 +243,17 @@ function ServiceItem({ service }: { service: Service }) {
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
 
-    // return () => {
-    //   el.removeEventListener("mouseenter", onEnter);
-    //   el.removeEventListener("mouseleave", onLeave);
-    // };
+    return () => {
+      el.removeEventListener("mouseenter", onEnter);
+      el.removeEventListener("mouseleave", onLeave);
+      // Clean up any running timeline on unmount
+      if (currentTimelineRef.current) {
+        currentTimelineRef.current.kill();
+        currentTimelineRef.current = null;
+      }
+      // Reset animation state
+      isAnimatingRef.current = false;
+    };
   }, []);
 
   const [leftWord, ...rest] = service.title.split(" ");
@@ -324,6 +366,9 @@ export function OurServices() {
         </div>
         <UnsureServicesSuit />
         <ClientTestimonial />
+        <FAQSection />
+        <Contact />
+        <Footer />
       </div>
     </section>
   );

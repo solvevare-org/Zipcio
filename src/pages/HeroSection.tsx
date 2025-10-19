@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section2 from "./Section2";
 
-function Bracket({
+export function Bracket({
   side = "left",
   className = "",
 }: {
@@ -86,10 +86,15 @@ function HeroSection() {
             headlineTween = gsap.fromTo(
               headlineRef.current,
               { y: 60, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 1.2 }
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: 1.2,
+              }
             );
           },
-        
         });
       }
 
@@ -471,7 +476,7 @@ function HeroSection() {
           </div>
         </div>
         {/* Second Screen */}
-        <section className="min-w-[100vw] bg-[#F5F5F5] min-h-[500vh] flex flex-col flex-shrink-0">
+        <section className="min-w-[100vw] bg-[#F5F5F5] min-h-[100vh] flex flex-col flex-shrink-0">
           <Section2 />
         </section>
       </div>

@@ -46,32 +46,37 @@ function HeroSection() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.innerWidth < 1024) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      gsap.set(layer1.current, { x: 0, rotation: 4 });
-      gsap.set(layer2.current, { x: 0, rotation: -2 });
-      gsap.set(layer3.current, { x: 0, rotation: 2 });
-      gsap.set(cardRef.current, { x: 0, y: 0 });
-      gsap.set(stackRef.current, { x: 0, scale: 1, y: 0 });
+      const isDesktop = window.innerWidth >= 1024;
+      const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+      const isMobile = window.innerWidth < 768;
 
-      const cardSpacing = 300;
-      const horizontalDistance = window.innerWidth;
+      // Desktop animations (1024px+)
+      if (isDesktop) {
+        gsap.set(layer1.current, { x: 0, rotation: 4 });
+        gsap.set(layer2.current, { x: 0, rotation: -2 });
+        gsap.set(layer3.current, { x: 0, rotation: 2 });
+        gsap.set(cardRef.current, { x: 0, y: 0 });
+        gsap.set(stackRef.current, { x: 0, scale: 1, y: 0 });
 
-      // Increase scroll height so the sequence can play fully (hero down, then card slide, then horizontal)
-      const totalScrollHeight = window.innerHeight * 10;
+        const cardSpacing = 300;
+        const horizontalDistance = window.innerWidth;
 
-      const master = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: () => "+=" + totalScrollHeight, // Use the new, higher scroll height
-          scrub: 1, // longer scrub for smoother, eased mapping from scroll to timeline
-          pin: true,
-        },
-      });
+        // Increase scroll height so the sequence can play fully (hero down, then card slide, then horizontal)
+        const totalScrollHeight = window.innerHeight * 10;
+
+        const master = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: () => "+=" + totalScrollHeight, // Use the new, higher scroll height
+            scrub: 1, // longer scrub for smoother, eased mapping from scroll to timeline
+            pin: true,
+          },
+        });
 
       // headline: animate from below into view when it enters
       if (headlineRef.current) {
@@ -146,14 +151,113 @@ function HeroSection() {
       // Start the horizontal movement after a fraction of the total scroll (e.g., at 50% of the total scroll)
       // The horizontal scroll will now push the first W-screen out and reveal the second W-screen.
       // start horizontal translation after the card has moved (give it 1.5s buffer)
-      master.to(
-        innerRef.current,
-        {
-          x: -horizontalDistance,
-          ease: "power1.inOut",
-        },
-        cardDelay + 0.9
-      );
+        master.to(
+          innerRef.current,
+          {
+            x: -horizontalDistance,
+            ease: "power1.inOut",
+          },
+          cardDelay + 0.9
+        );
+      }
+
+      // Tablet animations (768px - 1023px) - optimized for tablet experience
+      if (isTablet) {
+        // Disable complex desktop animations but keep some visual effects
+        gsap.set([layer1.current, layer2.current, layer3.current], { opacity: 0 });
+        
+        // Simple tablet headline animation
+        if (headlineRef.current) {
+          ScrollTrigger.create({
+            trigger: headlineRef.current,
+            start: "top 75%",
+            onEnter: () => {
+              gsap.fromTo(
+                headlineRef.current,
+                { y: 40, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.7,
+                  ease: "power2.out",
+                }
+              );
+            },
+          });
+        }
+
+        // Tablet card animation - simpler than desktop but more than mobile
+        if (stackRef.current) {
+          ScrollTrigger.create({
+            trigger: stackRef.current,
+            start: "top 60%",
+            onEnter: () => {
+              gsap.fromTo(
+                stackRef.current,
+                { y: 60, opacity: 0.7, scale: 0.95 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.9,
+                  ease: "power2.out",
+                }
+              );
+            },
+          });
+        }
+
+        // Tablet: keep visual entrance animations only. We intentionally
+        // DO NOT animate innerRef.x on tablet so scrolling remains vertical.
+      }
+
+      // Mobile animations (under 768px) - simplest and most performant
+      if (isMobile) {
+        // Hide desktop layers completely on mobile
+        gsap.set([layer1.current, layer2.current, layer3.current], { opacity: 0, display: "none" });
+        
+        // Simple fade-in animation for mobile headline
+        if (headlineRef.current) {
+          ScrollTrigger.create({
+            trigger: headlineRef.current,
+            start: "top 80%",
+            onEnter: () => {
+              gsap.fromTo(
+                headlineRef.current,
+                { y: 30, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.6,
+                  ease: "power2.out",
+                }
+              );
+            },
+          });
+        }
+
+        // Simple scroll-triggered animation for mobile cards
+        if (stackRef.current) {
+          ScrollTrigger.create({
+            trigger: stackRef.current,
+            start: "top 70%",
+            onEnter: () => {
+              gsap.fromTo(
+                stackRef.current,
+                { y: 50, opacity: 0.8 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.8,
+                  ease: "power2.out",
+                }
+              );
+            },
+          });
+        }
+
+        // No horizontal scroll on mobile - just normal scrolling
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -223,10 +327,12 @@ function HeroSection() {
   //   }, []);
 
   return (
-    <main ref={containerRef} className="min-h-[100vh] overflow-hidden">
-      <div ref={innerRef} className="flex w-[200vw]">
+    <main ref={containerRef} className="min-h-[100vh] overflow-x-hidden lg:overflow-hidden">
+      {/* On lg+ screens we use a horizontal 2-screen layout (200vw).
+          On smaller screens we stack the sections vertically (flex-col, full width). */}
+  <div ref={innerRef} className="flex flex-col lg:flex-row">
         {/* First Screen */}
-        <div className="w-[100vw] h-screen flex-shrink-0">
+        <div className="w-full lg:w-screen lg:h-screen flex-shrink-0">
           <div className="min-h-screen bg-[#f5f5f5]">
             <header className="flex items-start justify-between px-4 md:px-8 md:py-6">
               <div className="text-2xl md:text-3xl font-bold tracking-tight">
@@ -363,44 +469,45 @@ function HeroSection() {
 
                     <div className="lg:hidden">
                       <div className="flex items-start gap-2 mb-4">
-                        <div className="w-[40px] sm:w-[56px]">
+                        <div className="w-[30px] sm:w-[40px] md:w-[50px]">
                           <Bracket className="w-full h-auto" />
                         </div>
-                        <h1 className="text-[50px] sm:text-[70px] md:text-[90px] font-black leading-none tracking-tighter flex-1">
+                        <h1 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter flex-1">
                           TURBO-CHARGE
                         </h1>
                       </div>
 
                       <div className="flex items-start gap-2 mb-6">
-                        <h2 className="text-[50px] sm:text-[70px] md:text-[90px] font-black leading-none tracking-tighter">
+                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter">
                           YOUR
                         </h2>
-                        <div className="w-[40px] sm:w-[56px]">
+                        <div className="w-[30px] sm:w-[40px] md:w-[50px]">
                           <Bracket side="right" className="w-full h-auto" />
                         </div>
                       </div>
 
                       <div className="mb-6 flex justify-center">
                         <div className="relative">
-                          <div className="absolute -left-8 -top-8 w-[260px] h-[260px] rounded-[26px] bg-[#00e676] transform rotate-3 shadow-lg lg:hidden z-0" />
-                          <div className="absolute -left-2 -top-2 w-[230px] h-[230px] rounded-[22px] bg-[#00bfa5] transform rotate-1 shadow-md lg:hidden z-0" />
-                          <div className="absolute right-[-40px] top-12 w-[280px] h-[280px] rounded-[26px] bg-[#e6d3ff] transform rotate-6 shadow-lg lg:hidden z-0" />
+                          {/* Desktop layers - hidden on mobile/tablet */}
+                          <div className="absolute -left-4 -top-4 w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] rounded-[20px] bg-[#00e676] transform rotate-3 shadow-lg lg:hidden z-0" />
+                          <div className="absolute -left-1 -top-1 w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[260px] md:h-[260px] rounded-[18px] bg-[#00bfa5] transform rotate-1 shadow-md lg:hidden z-0" />
+                          <div className="absolute right-[-20px] top-8 w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[300px] md:h-[300px] rounded-[20px] bg-[#e6d3ff] transform rotate-6 shadow-lg lg:hidden z-0" />
 
-                          <div className="w-[280px] h-[320px] sm:w-[320px] sm:h-[360px] rounded-3xl overflow-hidden relative bg-gradient-to-br from-[#00e676] via-[#00e676] to-purple-400 p-1 z-10">
+                          <div className="w-[220px] h-[250px] sm:w-[260px] sm:h-[290px] md:w-[300px] md:h-[330px] rounded-3xl overflow-hidden relative bg-gradient-to-br from-[#00e676] via-[#00e676] to-purple-400 p-1 z-10">
                             <div className="w-full h-full rounded-3xl overflow-hidden relative">
                               <img
-                                src="https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&w=600"
+                                src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/hero-girl-1.jpeg"
                                 alt="Woman smiling"
                                 className="w-full h-full object-cover"
                               />
-                              <div className="absolute bottom-6 left-6 text-white">
-                                <div className="text-4xl sm:text-5xl font-bold mb-1">
+                              <div className="absolute bottom-4 left-4 text-white">
+                                <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1">
                                   +40%
                                 </div>
-                                <div className="text-base sm:text-lg font-medium">
+                                <div className="text-sm sm:text-base md:text-lg font-medium">
                                   Lead-to-customer
                                 </div>
-                                <div className="text-base sm:text-lg font-medium">
+                                <div className="text-sm sm:text-base md:text-lg font-medium">
                                   conversions
                                 </div>
                               </div>
@@ -410,13 +517,13 @@ function HeroSection() {
                       </div>
 
                       <div className="flex items-start gap-2">
-                        <div className="text-[60px] sm:text-[80px] font-bold text-[#00e676] leading-none">
+                        <div className="text-[40px] sm:text-[50px] md:text-[60px] font-bold text-[#00e676] leading-none">
                           [
                         </div>
-                        <h2 className="text-[50px] sm:text-[70px] md:text-[90px] font-black leading-none tracking-tighter flex-1">
+                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter flex-1">
                           GROWTH
                         </h2>
-                        <div className="text-[60px] sm:text-[80px] font-bold text-[#00e676] leading-none">
+                        <div className="text-[40px] sm:text-[50px] md:text-[60px] font-bold text-[#00e676] leading-none">
                           ]
                         </div>
                       </div>
@@ -456,15 +563,15 @@ function HeroSection() {
                 </div>
                 <div ref={headlineRef} className="transform-gpu opacity-[0]">
                   <p>
-                    <span className="text-[120px] font-[Duck-cry] leading-none font-[600]">
+                    <span className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-[Duck-cry] leading-none font-[600]">
                       YOUR <br />
                       CRM <br />
-                      <div className="flex gap-4 items-center leading-none">
+                      <div className="flex gap-2 sm:gap-4 items-center leading-none">
                         <p>ON</p> <br />
                         <img
                           src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/raw_assets/public/ZipcioTheme/img/rocket.svg"
                           alt="Steroids"
-                          className="h-[60px]"
+                          className="h-[30px] sm:h-[40px] md:h-[50px] lg:h-[60px]"
                         />
                       </div>
                       STEROIDS
@@ -476,7 +583,7 @@ function HeroSection() {
           </div>
         </div>
         {/* Second Screen */}
-        <section className="min-w-[100vw] bg-[#F5F5F5] min-h-[100vh] flex flex-col flex-shrink-0">
+        <section className="w-full lg:w-screen bg-[#F5F5F5] min-h-[100vh] flex flex-col flex-shrink-0">
           <Section2 />
         </section>
       </div>

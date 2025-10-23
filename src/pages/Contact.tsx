@@ -262,27 +262,27 @@ export default function Contact() {
       {/* Contact Form Section */}
       <section
         id="contact"
-        className="font-serif py-20 bg-gradient-to-b from-card to-background"
+        className="font-serif py-10 lg:py-20 bg-gradient-to-b from-card to-background"
       >
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Image */}
-            <div className="rounded-3xl overflow-hidden">
-              <img
-                src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/hero-girl-1.jpeg"
-                alt="Contact Us"
-                className="w-full h-full object-cover"
+            <div className="rounded-2xl lg:rounded-3xl overflow-hidden order-2 lg:order-1">
+              <img 
+                src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/hero-girl-1.jpeg" 
+                alt="Contact Us" 
+                className="w-full h-[300px] lg:h-full object-cover"
               />
             </div>
 
             {/* Contact Form */}
-            <div className="bg-card border bg-[#B8A3F8] border-border rounded-3xl flex flex-col gap-[60px] p-8">
-              <h1 className="tracking-[0px] font-[Duck-cry] text-[50px] font-[500]">
+            <div className="bg-card border bg-[#B8A3F8] border-border rounded-2xl lg:rounded-3xl flex flex-col gap-[30px] lg:gap-[60px] p-6 lg:p-8 order-1 lg:order-2">
+              <h1 className="tracking-[0px] font-[Duck-cry] text-[30px] sm:text-[40px] lg:text-[50px] font-[500]">
                 START A PROJECT
               </h1>
               <form
                 onSubmit={handleSubmit}
-                className="space-y-6 px-[30px]"
+                className="space-y-4 lg:space-y-6 px-0 lg:px-[30px]"
                 data-testid="contact-form"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -290,13 +290,13 @@ export default function Contact() {
                     <label className="block text-sm font-medium text-foreground mb-2">
                       First Name *
                     </label>
-                    <input
-                      type="text"
+                    <input 
+                      type="text" 
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] rounded-full border border-input text-foreground"
+                      required 
+                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] rounded-full border border-input text-foreground" 
                       placeholder="John"
                       data-testid="input-first-name"
                     />
@@ -305,13 +305,13 @@ export default function Contact() {
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Last Name *
                     </label>
-                    <input
-                      type="text"
+                    <input 
+                      type="text" 
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] border rounded-full border-input text-foreground"
+                      required 
+                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] border rounded-full border-input text-foreground" 
                       placeholder="Doe"
                       data-testid="input-last-name"
                     />
@@ -322,13 +322,13 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Email *
                   </label>
-                  <input
-                    type="email"
+                  <input 
+                    type="email" 
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]"
+                    required 
+                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]" 
                     placeholder="john@example.com"
                     data-testid="input-email"
                   />
@@ -338,12 +338,12 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Phone Number *
                   </label>
-                  <div className="flex gap-2">
-                    <select
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <select 
                       name="countryCode"
                       value={formData.countryCode}
                       onChange={handleChange}
-                      className="px-3 py-3 w-[30%] outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground"
+                      className="px-3 py-3 w-full sm:w-[30%] outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground text-sm"
                       data-testid="select-country-code"
                     >
                       {countries.map((country, index) => (
@@ -352,13 +352,13 @@ export default function Contact() {
                         </option>
                       ))}
                     </select>
-                    <input
-                      type="tel"
+                    <input 
+                      type="tel" 
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      required
-                      className="flex-1 px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground"
+                      required 
+                      className="flex-1 px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground" 
                       placeholder="(555) 123-4567"
                       data-testid="input-phone"
                     />
@@ -369,13 +369,13 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Company Name *
                   </label>
-                  <input
-                    type="text"
+                  <input 
+                    type="text" 
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground "
+                    required 
+                    className="w-full px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground " 
                     placeholder="Acme Inc."
                     data-testid="input-company-name"
                   />
@@ -385,13 +385,13 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Website URL *
                   </label>
-                  <input
-                    type="url"
+                  <input 
+                    type="url" 
                     name="websiteUrl"
                     value={formData.websiteUrl}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]"
+                    required 
+                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]" 
                     placeholder="https://example.com"
                     data-testid="input-website-url"
                   />
@@ -401,61 +401,61 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Additional Notes
                   </label>
-                  <textarea
+                  <textarea 
                     name="additionalNotes"
                     value={formData.additionalNotes}
                     onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-input rounded-lg text-foreground outline-none bg-[#C5B1F9]"
+                    rows={4} 
+                    className="w-full px-4 py-3 border border-input rounded-lg text-foreground outline-none bg-[#C5B1F9]" 
                     placeholder="Tell us about your project..."
                     data-testid="textarea-additional-notes"
                   ></textarea>
                 </div>
 
-                <div className="w-full flex justify-center items-center">
-                  <button
-                    type="submit"
-                    className=" bg-white font-[poppins] px-8 py-4 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
-                    data-testid="button-submit-form"
-                  >
-                    Submit
-                  </button>
-                </div>
+             <div className="w-full flex justify-center items-center">
+                 <button 
+                  type="submit" 
+                  className=" bg-white font-[poppins] px-8 py-4 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                  data-testid="button-submit-form"
+                >
+                  Submit
+                </button>
+             </div>
               </form>
             </div>
           </div>
-          <div className="mt-[100px] grid grid-cols-1 lg:grid-cols-2 items-center">
+          <div className="mt-[50px] lg:mt-[100px] grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-0">
             {/* Left: big title with left bracket */}
-            <div className="flex gap-6">
+            <div className="flex gap-4 lg:gap-6">
               <div className="hidden lg:block">
                 <Bracket side="right" className="w-full h-[200px]" />
               </div>
-              <div className="text-[120px] leading-[100px] tracking-[0px]">
+              <div className="text-[60px] sm:text-[80px] lg:text-[120px] leading-[50px] sm:leading-[70px] lg:leading-[100px] tracking-[0px]">
                 <h2 className="font-[Duck-cry]">
                   SUBSCRIBE <br />
                   TO UPDATES
                 </h2>
-              </div>
+        </div>
             </div>
 
             {/* Right: copy + email input */}
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row">
               <div className="w-full font-[poppins]">
-                <h2 className="text-2xl font-semibold mb-2">
-                  Stay informed about our latest offerings and insights.
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
+              Stay informed about our latest offerings and insights.
                 </h2>
-                <p className="text-sm text-muted mb-6">We respect your privacy and protect your information.</p>
+                <p className="text-sm text-muted mb-4 lg:mb-6">We respect your privacy and protect your information.</p>
 
                 <div className="relative">
-                  <div className="flex bg-white border justify-center items-center border-gray-200 rounded-full shadow-sm overflow-hidden">
-                    <input
-                      type="email"
+                  <div className="flex flex-col sm:flex-row bg-white border border-gray-200 rounded-full shadow-sm overflow-hidden">
+              <input 
+                type="email" 
                       placeholder="Your email here"
-                      className="flex-1 px-6 py-4 text-gray-600 placeholder-gray-400 bg-transparent outline-none"
+                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-gray-600 placeholder-gray-400 bg-transparent outline-none"
                     />
-                    <button className="ml-4 mr-4 px-6 py-2 rounded-full bg-[#111111] text-white absolute right-0 font-medium">
+                    <button className="px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-[#111111] text-white font-medium text-sm sm:text-base">
                       Join us
-                    </button>
+              </button>
                   </div>
                 </div>
               </div>

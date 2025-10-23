@@ -30,20 +30,20 @@ const ClientTestimonial = () => {
   ];
 
   return (
-    <section className="min-h-[100vh] flex flex-col gap-[200px] mt-12">
-      <div className="text-center mt-[70px]">
-        <h1 className="font-[Duck-cry] leading-none text-[120px]">
+    <section className="min-h-[100vh] flex flex-col gap-[100px] lg:gap-[200px] mt-12">
+      <div className="text-center mt-[40px] lg:mt-[70px]">
+        <h1 className="font-[Duck-cry] leading-none text-[60px] sm:text-[80px] lg:text-[120px]">
           CLIENT <br />
           TESTIMONIAL
         </h1>
       </div>
       <div>
       {TestimonialDiv.map((item) => (
-        <div key={item.id} className="grid grid-cols-4 font-[poppins] mt-[50px] border-t">
-          <p className="text-gray-600">/0{item.id}</p>
+        <div key={item.id} className="grid grid-cols-1 lg:grid-cols-4 font-[poppins] mt-[30px] lg:mt-[50px] border-t gap-4 lg:gap-0">
+          <p className="text-gray-600 text-sm lg:text-base">/0{item.id}</p>
 
           {/* name/company - avoid nested <p> inside <p> */}
-          <div className="font-[500]">
+          <div className="font-[500] text-sm lg:text-base">
             <div>{item.name}</div>
             <div className="text-gray-500">{item.company}</div>
           </div>
@@ -51,12 +51,12 @@ const ClientTestimonial = () => {
           {/* use inline style for dynamic background color */}
           <div
             style={{ background: item.background }}
-            className="h-[250px] rounded-2xl border w-[200px] -top-[50%] relative flex justify-center items-center"
+            className="h-[150px] lg:h-[250px] rounded-2xl border w-full lg:w-[200px] -top-[25px] lg:-top-[50px] relative flex justify-center items-center mx-auto lg:mx-0"
           >
-            <img src={item.logo} alt="" className="h-[35px]" />
+            <img src={item.logo} alt="" className="h-[25px] lg:h-[35px]" />
           </div>
 
-          <p className="font-[500]">{item.testimonial}</p>
+          <p className="font-[500] text-sm lg:text-base">{item.testimonial}</p>
         </div>
       ))}
         </div>

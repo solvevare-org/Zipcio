@@ -37,36 +37,36 @@ export default function FAQSection() {
   };
 
   return (
-    <section data-testid="faq-section" className="py-4 px-8  ">
-      <div className="max-w-[full] mx-auto border-t flex gap-[50px]">
-        <div className="flex flex-col justify-around gap-[30px] mt-[30px] w-[40%] p-8 h-[200px]  rounded-2xl bg-white ">
-          <div className="flex justify-between leading-[50px]">
-            <h2 className="font-[Duck-cry] text-[50px] ">STILL HAVE QUESTIONS?</h2>
-              <ArrowUpRight  size={"26px"} />
+    <section data-testid="faq-section" className="py-4 px-4 sm:px-8">
+      <div className="max-w-[full] mx-auto border-t flex flex-col lg:flex-row gap-8 lg:gap-[50px]">
+        <div className="flex flex-col justify-around gap-[20px] lg:gap-[30px] mt-[20px] lg:mt-[30px] w-full lg:w-[40%] p-6 lg:p-8 h-auto lg:h-[200px] rounded-2xl bg-white">
+          <div className="flex justify-between items-start lg:items-center leading-[30px] lg:leading-[50px]">
+            <h2 className="font-[Duck-cry] text-[30px] sm:text-[40px] lg:text-[50px]">STILL HAVE QUESTIONS?</h2>
+            <ArrowUpRight size={"20px"} className="lg:w-[26px] lg:h-[26px] flex-shrink-0" />
           </div>
-          <p className="font-[poppins] text-gray-500 flex items-center gap-2">
-            <div className="h-2 bg-gray-500 w-2"/>
+          <p className="font-[poppins] text-gray-500 flex items-center gap-2 text-sm lg:text-base">
+            <div className="h-2 bg-gray-500 w-2 flex-shrink-0"/>
             We're here to help you.
           </p>
         </div>
-        <div className="faq-container mt-[30px] font-[poppins] ">
+        <div className="faq-container mt-[20px] lg:mt-[30px] font-[poppins] w-full lg:w-auto">
           {faqs.map((faq, index) => (
             <div
               key={index}
               data-testid={`faq-item-${index}`}
-              className={`faq-item mb-10 bg-white shadow-sm px-6 transition-all duration-300 hover:bg-[#69D965] rounded-2xl py-6 ${
+              className={`faq-item mb-6 lg:mb-10 bg-white shadow-sm px-4 lg:px-6 transition-all duration-300 hover:bg-[#69D965] rounded-2xl py-4 lg:py-6 ${
                 openFAQ === index ? "active" : ""
               }`}
             >
               <button
                 data-testid={`faq-question-${index}`}
-                className="faq-question flex justify-between items-center w-full text-left cursor-pointer text-xl font-semibold text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors duration-300"
+                className="faq-question flex justify-between items-start lg:items-center w-full text-left cursor-pointer text-lg lg:text-xl font-semibold text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors duration-300 gap-4"
                 onClick={() => toggleFAQ(index)}
               >
-                <span>{faq.question}</span>
+                <span className="flex-1">{faq.question}</span>
                 <Plus
-                  size={24}
-                  className={`faq-icon transition-transform duration-300 ${
+                  size={20}
+                  className={`faq-icon transition-transform duration-300 flex-shrink-0 lg:w-6 lg:h-6 ${
                     openFAQ === index ? "rotate-45" : ""
                   }`}
                 />
@@ -74,7 +74,7 @@ export default function FAQSection() {
 
               <div
                 data-testid={`faq-answer-${index}`}
-                className={`faq-answer overflow-hidden transition-all duration-300 text-[var(--text-secondary)] pr-8 ${
+                className={`faq-answer overflow-hidden transition-all duration-300 text-[var(--text-secondary)] pr-0 lg:pr-8 text-sm lg:text-base ${
                   openFAQ === index ? "max-h-96 pt-4" : "max-h-0"
                 }`}
               >

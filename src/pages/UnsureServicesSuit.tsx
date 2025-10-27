@@ -1,131 +1,3 @@
-// const UnsureServicesSuit = () => {
-//   return (
-//     <section id="services" className="min-h-[50vh] lg:min-h-[70vh] mt-12 w-full">
-//       <div className="bg-[#69D965] rounded-2xl  flex w-full lg:w-[100%] ">
-//         <ServicesGrid />
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default UnsureServicesSuit;
-
-//   {/* <div className="bg-[#B8A3F8] rounded-2xl px-6 lg:px-8 py-6 lg:py-8 flex w-full lg:w-[50%] flex-col justify-between">
-//     <div className="flex justify-between items-start gap-4">
-//       <h1 className="font-[Duck-cry] text-[24px] sm:text-[32px] lg:text-[60px] leading-none">UNSURE WHICH SERVICE SUITS <br /> YOU?</h1>
-//       <div className="border flex justify-center items-center rounded-full bg-white h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] flex-shrink-0">
-//         <ArrowUpRight size={"20px"} className="lg:w-[24px] lg:h-[24px]" />
-//       </div>
-//     </div>
-//     <div className="mt-4 lg:mt-0">
-//       <p className="font-[poppins] w-full lg:w-[80%] font-[600] text-sm lg:text-base">
-//         Booking a consultation with our experts can help you identify the
-//         best services for your needs.
-//       </p>
-//     </div>
-//   </div> */}
-
-// import {  CheckCircle, Info, Minus } from "lucide-react";
-
-// export const ServicesGrid = () => {
-//   const features = [
-//     { name: "AI Foundation", info: true, basic: true, advanced1: true, advanced2: true },
-//     { name: "Single-Entry Data Flow", info: true, basic: true, advanced1: true, advanced2: true },
-//     { name: "Client Experience", info: true, basic: true, advanced1: true, advanced2: true },
-//     { name: "Smart Automation", info: true, basic: false, advanced1: true, advanced2: true },
-//     { name: "From Lead to Close", info: true, basic: false, advanced1: true, advanced2: true },
-//     { name: "Analytics & Growth", info: true, basic: false, advanced1: true, advanced2: true },
-//     { name: "Pricing", info: true, basic: false, advanced1: false, advanced2: true },
-//     { name: "Scalability", info: true, basic: false, advanced1: false, advanced2: true },
-//     { name: "White-Labeling", info: true, basic: false, advanced1: false, advanced2: true }
-//   ];
-
-//   return (
-//     <section className="min-h-screen w-full font-[poppins] py-6 px-4 lg:px-8">
-//       <div className="mx-auto">
-//         <div className=" rounded-lg overflow-hidden">
-//           <div className="px-6 py-5 border-b border-gray-800">
-//             <h2 className="text-3xl uppercase tracking-wider">
-//               Leading Real Estate CRMs
-//             </h2>
-//           </div>
-
-//           <div className="no-scrollbar overflow-x-auto">
-//             <table className="w-full">
-//               <thead>
-//                 <tr className="border-b  border-gray-800">
-//                   <th className="text-left py-10 px-6 text-sm font-normal "></th>
-//                   <th className="text-center py-4 px-6 text-sm font-normal  w-32">
-//                     Basic
-//                   </th>
-//                   <th className="text-center py-4 px-6 text-sm font-normal w-32">
-//                     Advanced
-//                   </th>
-//                   <th className="text-center py-4 px-6 text-sm font-normal w-32">
-//                     Advanced
-//                   </th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {features.map((feature, index) => (
-//                   <tr
-//                     key={index}
-//                     className="border-b border-gray-800 last:border-b-0"
-//                   >
-//                     <td className="py-10 px-6">
-//                       <div className="flex items-center gap-2">
-//                         <span className="text-sm">{feature.name}</span>
-//                         {feature.info && (
-//                           <Info size={14} className="text-gray-600" />
-//                         )}
-//                       </div>
-//                     </td>
-//                     <td className="py-4 px-6 text-center">
-//                       {feature.basic ? (
-//                         <div className="flex justify-center">
-//                           <CheckCircle size={18} className="text-gray-500" strokeWidth={2} />
-//                         </div>
-//                       ) : (
-//                         <div className="flex justify-center">
-//                           <Minus size={18} className="text-gray-700" strokeWidth={2} />
-//                         </div>
-//                       )}
-//                     </td>
-//                     <td className="py-4 px-6 text-center">
-//                       {feature.advanced1 ? (
-//                         <div className="flex justify-center">
-//                           <CheckCircle size={18} className="text-gray-500" strokeWidth={2} />
-//                         </div>
-//                       ) : (
-//                         <div className="flex justify-center">
-//                           <Minus size={18} className="text-gray-700" strokeWidth={2} />
-//                         </div>
-//                       )}
-//                     </td>
-//                     <td className="py-4 px-6 text-center">
-//                       {feature.advanced2 ? (
-//                         <div className="flex justify-center">
-//                           <CheckCircle size={18} className="text-gray-500" strokeWidth={2} />
-//                         </div>
-//                       ) : (
-//                         <div className="flex justify-center">
-//                           <Minus size={18} className="text-gray-700" strokeWidth={2} />
-//                         </div>
-//                       )}
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-"use client";
-
 interface Product {
   name: string;
   headerColor: string;
@@ -138,13 +10,17 @@ interface Product {
   pricing: string;
   discounts: string;
   dotColor?: string;
+  para: string;
+  para_2: string;
+  para_3: string;
+  para_4: string;
 }
 
 const products: Product[] = [
   {
     name: "NuHelixX RE",
-    headerColor: "#0D5A7A",
-    columnBgColor: "#E8F1F5",
+    headerColor: "#5A9D3D",
+    columnBgColor: "#F0F5E8",
     platforms: ["Windows", "Mac"],
     features: {
       "Capture Images": true,
@@ -156,6 +32,10 @@ const products: Product[] = [
       Quizzing: false,
       "Import Media with TechSmith Fuse": true,
     },
+    para:"AI-first, built into the DNA—auto-tagging, follow-ups, property matching, client insights.",
+    para_2:"Enter once; flows across CRM, MLS, contracts, and dashboards.",
+    para_3:"Buyer & Seller Portals: alerts, favorites, property views, secure messaging, real-time updates.",
+    para_4:"Enter once; flows across CRM, MLS, contracts, and dashboards.",
     licensing: "per user",
     pricing: "$49.95",
     discounts: "commercial, education, government, multi-user",
@@ -163,8 +43,8 @@ const products: Product[] = [
   },
   {
     name: "kvCORE",
-    headerColor: "#5A9D3D",
-    columnBgColor: "#F0F5E8",
+    headerColor: "#C41E3A",
+    columnBgColor: "#F5E8E8",
     platforms: ["Windows", "Mac"],
     features: {
       "Capture Images": false,
@@ -180,11 +60,15 @@ const products: Product[] = [
     pricing: "$199",
     discounts: "commercial, education, government, multi-user",
     dotColor: "#5A9D3D",
+    para:"AI add-ons; limited native integration.",
+    para_2:"AI add-ons; limited native integration.",
+    para_3:"Buyer alerts; limited seller tools.",
+    para_4:"AI add-ons; limited native integration."
   },
   {
     name: "BoomTown",
-    headerColor: "#2B7A8F",
-    columnBgColor: "#E8F3F5",
+    headerColor: "#C41E3A",
+    columnBgColor: "#F5E8E8",
     platforms: ["Windows"],
     features: {
       "Capture Images": false,
@@ -199,6 +83,10 @@ const products: Product[] = [
     licensing: "per user",
     pricing: "$1,995",
     discounts: "commercial, education, government",
+    para:"Some automation; not AI-first.",
+    para_2:"Agent-siloed; manual syncs common.",
+    para_3:"Basic portals; limited seller transparency.",
+    para_4:"Some automation; not AI-first.",
     dotColor: "#2B7A8F",
   },
   {
@@ -220,23 +108,13 @@ const products: Product[] = [
     pricing: "contact us for a custom quote",
     discounts: "commercial, education",
     dotColor: "#C41E3A",
+    para:"Minimal automation; no AI-first design.",
+    para_2:"Agent-siloed; manual syncs common.",
+    para_3:"Mostly IDX; limited client features.",
+    para_4:"Minimal automation; no AI-.",
   },
 ];
 
-const featureRows = [
-  "Platforms",
-  "Capture Images",
-  "Edit Images",
-  "Record Video",
-  "Video Trimming",
-  "Edit Video",
-  "Media Hosting",
-  "Quizzing",
-  "Import Media with TechSmith Fuse",
-  "Licensing",
-  "Pricing",
-  "Discounts",
-];
 
 export default function UnsureServicesSuit() {
   return (
@@ -265,132 +143,103 @@ export default function UnsureServicesSuit() {
           </tr>
         </thead>
         <tbody>
-          {/* Platforms Row */}
-          <tr>
-            <td className="bg-transparent border border-gray-200 p-4 font-semibold text-sm text-gray-900">
-              Platforms
-            </td>
-            {products.map((product) => (
-              <td
-                key={`${product.name}-platforms`}
-                className="border border-gray-200 p-4 text-center"
-                style={{ backgroundColor: product.columnBgColor }}
-              >
-                <div className="flex justify-center gap-2">
-                  {product.platforms.includes("Windows") && (
-                    <span className="text-lg">⊞</span>
-                  )}
-                  {product.platforms.includes("Mac") && (
-                    <span className="text-lg">🍎</span>
-                  )}
-                </div>
-              </td>
-            ))}
-          </tr>
-
-          {/* Feature Rows */}
-          {featureRows.slice(1, -3).map((feature) => (
-            <tr key={feature}>
+          {/* Static rows to match the screenshot content */}
+          {(
+            [
+              {
+                key: "AI Foundation",
+                values: [
+                  "AI-first, built into the DNA—auto-tagging, follow-ups, property matching, client insights.",
+                  "AI add-ons; limited native integration.",
+                  "Some automation; not AI-first.",
+                  "Minimal automation; no AI-first design.",
+                ],
+              },
+              {
+                key: "Single-Entry Data Flow",
+                values: [
+                  "Enter once; flows across CRM, MLS, contracts, and dashboards.",
+                  "Agent-siloed; manual syncs common.",
+                  "Team/agent silos; limited sharing.",
+                  "Agent-owned; manual re-entry.",
+                ],
+              },
+              {
+                key: "Client Experience",
+                values: [
+                  "Buyer & Seller Portals: alerts, favorites, property views, secure messaging, real-time updates.",
+                  "Buyer alerts; limited seller tools.",
+                  "Basic portals; limited seller transparency.",
+                  "Mostly IDX; limited client features.",
+                ],
+              },
+              {
+                key: "Smart Automation",
+                values: [
+                  "AI handles follow-ups, drip campaigns, reminders, and lead scoring—saves 5–10 hrs/week.",
+                  "Generic email/SMS drips.",
+                  "Automations with limits.",
+                  "Templates; manual follow-ups.",
+                ],
+              },
+              {
+                key: "From Lead to Close",
+                values: [
+                  "Offers, inspections, contracts, and closings in one dashboard with reminders.",
+                  "CRM-centric; partial transactions.",
+                  "Marketing-heavy; not end-to-end.",
+                  "Not designed for contracts/closings.",
+                ],
+              },
+              {
+                key: "Analytics & Growth",
+                values: [
+                  "Real-time dashboards, AI forecasts, trends by districts, ROI reports (PDF-ready).",
+                  "Analytics available; less client-facing.",
+                  "Good dashboards; no AI forecasts.",
+                  "Basic reporting; no predictive insights.",
+                ],
+              },
+              {
+                key: "White-Labeling",
+                values: [
+                  "Full white-label branding, custom domains, templates.",
+                  "Limited branding.",
+                  "Some branding options.",
+                  "No true white-label.",
+                ],
+              },
+              {
+                key: "Pricing",
+                values: [
+                  "$250/user/month—everything included; no tiers or upsells.",
+                  "$499+/user/month; add-on fees.",
+                  "$1,000+/month; features gated.",
+                  "~$299/month base; limited automation.",
+                ],
+              },
+              {
+                key: "Scalability",
+                values: [
+                  "Built for one agent or thousands.",
+                  "Team-oriented; costs rise quickly.",
+                  "Team-oriented; expensive to scale.",
+                  "OK for small teams; not enterprise.",
+                ],
+              },
+            ]
+          ).map((row) => (
+            <tr key={row.key}>
               <td className="bg-transparent border border-gray-200 p-4 font-semibold text-sm text-gray-900">
-                {feature}
+                {row.key}
               </td>
-              {products.map((product) => {
-                const hasFeature = product.features[feature];
-                return (
-                  <td
-                    key={`${product.name}-${feature}`}
-                    className="border border-gray-200 p-4 text-center"
-                    style={{ backgroundColor: product.columnBgColor }}
-                  >
-                    {hasFeature && (
-                      <div className="flex justify-center">
-                        <div
-                          className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: product.dotColor }}
-                        ></div>
-                      </div>
-                    )}
-                  </td>
-                );
-              })}
+              {row.values.map((v, i) => (
+                <td key={`${row.key}-${i}`} className="border border-gray-200 p-4 text-center" style={{ backgroundColor: products[i]?.columnBgColor }}>
+                  <div className="text-sm">{v}</div>
+                </td>
+              ))}
             </tr>
           ))}
-
-          {/* Licensing Row */}
-          <tr>
-            <td className="bg-transparent border border-gray-200 p-4 font-semibold text-sm text-gray-900">
-              Licensing
-            </td>
-            {products.map((product) => (
-              <td
-                key={`${product.name}-licensing`}
-                className="border border-gray-200 p-4 text-center text-sm"
-                style={{ backgroundColor: product.columnBgColor }}
-              >
-                <span
-                  className="font-medium"
-                  style={{
-                    color:
-                      product.name === "TECHSMITH RELAY"
-                        ? "#C41E3A"
-                        : product.headerColor,
-                  }}
-                >
-                  {product.licensing}
-                </span>
-              </td>
-            ))}
-          </tr>
-
-          {/* Pricing Row */}
-          <tr>
-            <td className="bg-transparent border border-gray-200 p-4 font-semibold text-sm text-gray-900">
-              Pricing
-            </td>
-            {products.map((product) => (
-              <td
-                key={`${product.name}-pricing`}
-                className="border border-gray-200 p-4 text-center text-sm font-semibold"
-                style={{ backgroundColor: product.columnBgColor }}
-              >
-                <span
-                  style={{
-                    color:
-                      product.name === "TECHSMITH RELAY"
-                        ? "#C41E3A"
-                        : product.headerColor,
-                  }}
-                >
-                  {product.pricing}
-                </span>
-              </td>
-            ))}
-          </tr>
-
-          {/* Discounts Row */}
-          <tr>
-            <td className="bg-transparent border border-gray-200 p-4 font-semibold text-sm text-gray-900">
-              Discounts
-            </td>
-            {products.map((product) => (
-              <td
-                key={`${product.name}-discounts`}
-                className="border border-gray-200 p-4 text-center text-xs"
-                style={{ backgroundColor: product.columnBgColor }}
-              >
-                <span
-                  style={{
-                    color:
-                      product.name === "TECHSMITH RELAY"
-                        ? "#C41E3A"
-                        : product.headerColor,
-                  }}
-                >
-                  {product.discounts}
-                </span>
-              </td>
-            ))}
-          </tr>
         </tbody>
       </table>
     </div>

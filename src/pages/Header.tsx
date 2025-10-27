@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <section id="home">
       <Navbar />
-      <div className="px-8 py-16 bg-[#f5f5f5] font-[poppins]">
+      <div className="px-8 py-1 pb-20 bg-[#f5f5f5] font-[poppins]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -82,7 +82,7 @@ export default function Header() {
 
             {/* Right Content - 3D Coin & Card */}
             <div className="min-h-[400px] gap-4 grid grid-cols-2">
-              <div className=" border rounded-2xl overflow-hidden">
+              <div className=" rounded-2xl overflow-hidden">
                 <video
                   src={VideoUrl}
                   loop
@@ -93,7 +93,7 @@ export default function Header() {
               </div>
 
               <div className="flex flex-col items-center">
-                <div className="border rounded-2xl w-full h-[60%] overflow-hidden">
+                <div className="rounded-2xl w-full h-[60%] overflow-hidden">
                   <img
                     src={Property_1}
                     alt="property"
@@ -111,7 +111,7 @@ export default function Header() {
           {/* Bottom Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-24">
             {/* Left - Mobile Mockup */}
-            <div className="flex min-h-[28rem] w-[100%] justify-center border-2 overflow-hidden rounded-2xl">
+            <div className="flex min-h-[28rem] w-[100%] justify-center overflow-hidden rounded-2xl">
               <img
                 src={Property_3}
                 alt="property"

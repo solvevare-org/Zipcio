@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Bracket } from "./HeroSection";
+import property_1 from "../assets/property_1.jpg";
 
 // Comprehensive list of countries with their codes and flags
 const countries = [
@@ -269,23 +270,23 @@ export default function Contact() {
             {/* Contact Image */}
             <div className="rounded-2xl lg:rounded-3xl overflow-hidden order-2 lg:order-1">
               <img 
-                src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/hero-girl-1.jpeg" 
+                src={property_1} 
                 alt="Contact Us" 
                 className="w-full h-[300px] lg:h-full object-cover"
               />
             </div>
 
             {/* Contact Form */}
-            <div className="bg-card border bg-[#B8A3F8] border-border rounded-2xl lg:rounded-3xl flex flex-col gap-[30px] lg:gap-[60px] p-6 lg:p-8 order-1 lg:order-2">
-              <h1 className="tracking-[0px] font-[Duck-cry] text-[30px] sm:text-[40px] lg:text-[50px] font-[500]">
-                START A PROJECT
+            <div className="bg-card rounded-2xl lg:rounded-3xl flex flex-col gap-[30px] lg:gap-[60px] p-6 lg:p-8 order-1 lg:order-2">
+              <h1 className="tracking-[1px] font-[Duck-cry] text-[30px] sm:text-[40px] lg:text-[50px] font-[500]">
+                Contact Us
               </h1>
               <form
                 onSubmit={handleSubmit}
                 className="space-y-4 lg:space-y-6 px-0 lg:px-[30px]"
                 data-testid="contact-form"
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid font-[poppins] grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       First Name *
@@ -296,13 +297,13 @@ export default function Contact() {
                       value={formData.firstName}
                       onChange={handleChange}
                       required 
-                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] rounded-full border border-input text-foreground" 
+                      className="w-full px-4 py-3 bg-background outline-none rounded-full border border-input text-foreground" 
                       placeholder="John"
                       data-testid="input-first-name"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                  <div >
+                    <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                       Last Name *
                     </label>
                     <input 
@@ -311,7 +312,7 @@ export default function Contact() {
                       value={formData.lastName}
                       onChange={handleChange}
                       required 
-                      className="w-full px-4 py-3 bg-background outline-none bg-[#C5B1F9] border rounded-full border-input text-foreground" 
+                      className="w-full px-4 py-3 bg-background outline-none  border rounded-full border-input text-foreground" 
                       placeholder="Doe"
                       data-testid="input-last-name"
                     />
@@ -319,7 +320,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                     Email *
                   </label>
                   <input 
@@ -328,14 +329,14 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required 
-                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]" 
+                    className="w-full px-4 py-3 font-[poppins]  border border-input rounded-full text-foreground outline-none  " 
                     placeholder="john@example.com"
                     data-testid="input-email"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                     Phone Number *
                   </label>
                   <div className="flex flex-col sm:flex-row gap-2">
@@ -343,7 +344,7 @@ export default function Contact() {
                       name="countryCode"
                       value={formData.countryCode}
                       onChange={handleChange}
-                      className="px-3 py-3 w-full sm:w-[30%] outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground text-sm"
+                      className="px-3 py-3 font-[poppins] w-full sm:w-[30%] outline-none   border border-input rounded-full text-foreground text-sm"
                       data-testid="select-country-code"
                     >
                       {countries.map((country, index) => (
@@ -358,7 +359,7 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={handleChange}
                       required 
-                      className="flex-1 px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground" 
+                      className="flex-1 font-[poppins] px-4 py-3 outline-none   border border-input rounded-full text-foreground" 
                       placeholder="(555) 123-4567"
                       data-testid="input-phone"
                     />
@@ -366,7 +367,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                     Company Name *
                   </label>
                   <input 
@@ -375,14 +376,14 @@ export default function Contact() {
                     value={formData.companyName}
                     onChange={handleChange}
                     required 
-                    className="w-full px-4 py-3 outline-none bg-[#C5B1F9] border border-input rounded-full text-foreground " 
+                    className="w-full font-[poppins] px-4 py-3 outline-none   border border-input rounded-full text-foreground " 
                     placeholder="Acme Inc."
                     data-testid="input-company-name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                     Website URL *
                   </label>
                   <input 
@@ -391,14 +392,14 @@ export default function Contact() {
                     value={formData.websiteUrl}
                     onChange={handleChange}
                     required 
-                    className="w-full px-4 py-3  border border-input rounded-full text-foreground outline-none bg-[#C5B1F9]" 
+                    className="w-full font-[poppins] px-4 py-3  border border-input rounded-full text-foreground outline-none  " 
                     placeholder="https://example.com"
                     data-testid="input-website-url"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block font-[poppins] text-sm font-medium text-foreground mb-2">
                     Additional Notes
                   </label>
                   <textarea 
@@ -406,7 +407,7 @@ export default function Contact() {
                     value={formData.additionalNotes}
                     onChange={handleChange}
                     rows={4} 
-                    className="w-full px-4 py-3 border border-input rounded-lg text-foreground outline-none bg-[#C5B1F9]" 
+                    className="w-full font-[poppins] px-4 py-3 border border-input rounded-lg text-foreground outline-none  " 
                     placeholder="Tell us about your project..."
                     data-testid="textarea-additional-notes"
                   ></textarea>
@@ -427,9 +428,7 @@ export default function Contact() {
           <div className="mt-[50px] lg:mt-[100px] grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-0">
             {/* Left: big title with left bracket */}
             <div className="flex gap-4 lg:gap-6">
-              <div className="hidden lg:block">
-                <Bracket side="right" className="w-full h-[200px]" />
-              </div>
+             
               <div className="text-[60px] sm:text-[80px] lg:text-[120px] leading-[50px] sm:leading-[70px] lg:leading-[100px] tracking-[0px]">
                 <h2 className="font-[Duck-cry]">
                   SUBSCRIBE <br />
@@ -447,7 +446,7 @@ export default function Contact() {
                 <p className="text-sm text-muted mb-4 lg:mb-6">We respect your privacy and protect your information.</p>
 
                 <div className="relative">
-                  <div className="flex flex-col sm:flex-row bg-white border border-gray-200 rounded-full shadow-sm overflow-hidden">
+                  <div className="flex  sm:flex-row bg-white border border-gray-200 rounded-full shadow-sm overflow-hidden">
               <input 
                 type="email" 
                       placeholder="Your email here"
@@ -460,9 +459,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="hidden lg:block">
-                <Bracket side="left" className="w-full h-[200px]" />
-              </div>
             </div>
           </div>
         </div>

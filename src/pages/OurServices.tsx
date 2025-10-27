@@ -1,11 +1,13 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import UnsureServicesSuit from "./UnsureServicesSuit";
 import ClientTestimonial from "./ClientTestimonial";
 import FAQSection from "./Faqs";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import property_1 from "../assets/property_1.jpg";
+import property_2 from "../assets/property_2.jpg";
+import property_3 from "../assets/property_3.jpg";
 
 type Service = {
   id: string;
@@ -21,62 +23,34 @@ const services: Service[] = [
     number: "/01",
     title: "CRM CONSULTANT",
     description: "Great for businesses needing optimal guidance.",
-    img: "https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/hero-girl-1.jpeg",
+    img: property_1,
   },
   {
     id: "02",
     number: "/02",
     title: "CRM OPTIMIZER",
     description: "Ideal for companies that require continuous project support.",
-    img: "https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/rocket%20(1).jpeg",
+    img: property_2,
   },
   {
     id: "03",
     number: "/03",
     title: "CRM LEADER",
     description: "Ideal for companies requiring ownership of HubSpot CRM.",
-    img: "https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/car%20(1).jpeg",
+    img: property_3,
   },
   {
     id: "04",
     number: "/04",
     title: "Bespoke Marketing",
     description: "Ideal for companies requiring ownership of HubSpot CRM.",
-    img: "https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/ship%20(1).jpeg",
+    img: property_1,
   },
 ];
 
-function Bracket({
-  side = "left",
-  className = "",
-}: {
-  side?: "left" | "right";
-  className?: string;
-}) {
-  const transform = side === "right" ? "scaleX(-1)" : undefined;
-  return (
-    <svg
-      viewBox="0 0 100 300"
-      className={className}
-      style={{ transform }}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      aria-hidden
-    >
-      <path
-        d="M18 10 L72 10 L72 40 L48 40 L48 260 L72 260 L72 290 L18 290"
-        stroke="#00e676"
-        strokeWidth="18"
-        strokeLinecap="square"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function ServiceItem({ service }: { service: Service }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const headerRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
   const iconRef = useRef<HTMLDivElement | null>(null);
   const placeholderRef = useRef<HTMLDivElement | null>(null);
@@ -89,6 +63,15 @@ function ServiceItem({ service }: { service: Service }) {
   const isAnimatingRef = useRef<boolean>(false);
 
   useEffect(() => {
+    // Only enable animations on large screens (Tailwind `lg` breakpoint: min-width: 1024px).
+    // On md and smaller screens we want the component to be static (no GSAP animations).
+    if (typeof window !== "undefined") {
+      const mq = window.matchMedia?.("(min-width: 1024px)");
+      if (mq && !mq.matches) {
+        return;
+      }
+    }
+
     const el = containerRef.current;
     const title = titleRef.current;
     const icon = iconRef.current;
@@ -96,155 +79,22 @@ function ServiceItem({ service }: { service: Service }) {
     const rightB = rightBracketRef.current;
     const desc = descRef.current;
     const explore = exploreRef.current;
-    if (!el || !title || !icon || !leftB || !rightB || !desc || !explore)
+    const placeholder = placeholderRef.current;
+    if (
+      !el ||
+      !title ||
+      !icon ||
+      !leftB ||
+      !rightB ||
+      !desc ||
+      !explore ||
+      !placeholder
+    )
       return;
 
-    // breakpoint detection
-    const isDesktop = window.innerWidth >= 1024;
-    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-    const isMobile = window.innerWidth < 768;
-
-    // register ScrollTrigger locally for this component
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Common initial states for interactive pieces (hidden by default)
-    gsap.set(leftB, { opacity: 0, y: 10, x: -60 });
-    gsap.set(rightB, { opacity: 0, y: 10, x: 60 });
-    gsap.set([desc, explore], { opacity: 0, y: 10 });
-    const placeholder = placeholderRef.current;
+    // initial state: hide interactive pieces on load (desktop)
+    gsap.set([leftB, rightB, desc, explore], { opacity: 0, y: 10 });
     gsap.set(placeholder, { width: 0, display: "inline-block" });
-    gsap.set(icon, { opacity: 0, y: 10, scale: 0.8, display: "none", zIndex: 20 });
-
-    // Desktop: full interaction on hover + scroll enter
-    if (isDesktop) {
-      // compute collapsed height and start collapsed
-      const headerEl = headerRef.current;
-      if (headerEl) gsap.set(el, { maxHeight: "200px", minHeight: "80px", overflow: "hidden" });
-
-      const onEnter = () => {
-        if (currentTimelineRef.current) {
-          currentTimelineRef.current.kill();
-          currentTimelineRef.current = null;
-        }
-        isAnimatingRef.current = true;
-        const tl = gsap.timeline();
-        currentTimelineRef.current = tl;
-        tl.to([leftB, rightB], { x: 0, opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0);
-        gsap.set(icon, { display: "flex" });
-        const measured = icon.getBoundingClientRect?.().width || 140;
-        tl.to(placeholder, { width: measured, duration: 0.45, ease: "power2.out" }, 0);
-        tl.to(icon, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.1)" }, 0.05);
-        tl.to(title, { opacity: 0.9, duration: 0.35, ease: "power2.out" }, 0.15);
-        tl.to(desc, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.25);
-        tl.to(explore, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.2)" }, 0.32);
-        tl.to(el, { maxHeight: "800px", duration: 0.45, ease: "power2.out" }, 0);
-        tl.to(el, { minHeight: "300px", duration: 0.35, ease: "power2.out" }, 0);
-        tl.eventCallback("onComplete", () => { currentTimelineRef.current = null; isAnimatingRef.current = false; });
-      };
-
-      const onLeave = () => {
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-        isAnimatingRef.current = true;
-        const tl = gsap.timeline({ onComplete: () => { gsap.set(icon, { display: "none" }); currentTimelineRef.current = null; isAnimatingRef.current = false; } });
-        currentTimelineRef.current = tl;
-        tl.to([leftB, rightB, desc, explore], { opacity: 0, y: 10, duration: 0.35, ease: "power2.in" }, 0);
-        tl.to(icon, { opacity: 0, scale: 0.8, y: 10, duration: 0.35, ease: "power2.in" }, 0);
-        tl.to(placeholder, { width: 0, duration: 0.35, ease: "power2.in" }, 0.05);
-        tl.to(title, { opacity: 1, duration: 0.35, ease: "power2.out" }, 0);
-        tl.to(el, { maxHeight: "200px", minHeight: "80px", duration: 0.35, ease: "power2.in" }, 0);
-      };
-
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-
-      const st = ScrollTrigger.create({ trigger: el, start: "top 80%", onEnter: () => { if (!isAnimatingRef.current) onEnter(); }, onLeaveBack: () => { if (!isAnimatingRef.current) onLeave(); } });
-
-      return () => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-        st.kill();
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-        isAnimatingRef.current = false;
-      };
-    }
-
-    // Tablet: lighter animations on scroll and hover (no huge expansions)
-    if (isTablet) {
-      gsap.set(el, { maxHeight: "300px", minHeight: "80px", overflow: "hidden" });
-
-      const onEnterTablet = () => {
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-        isAnimatingRef.current = true;
-        const tl = gsap.timeline();
-        currentTimelineRef.current = tl;
-        tl.to([leftB, rightB], { x: 0, opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0);
-        gsap.set(icon, { display: "flex" });
-        const measured = icon.getBoundingClientRect?.().width || 100;
-        tl.to(placeholder, { width: measured, duration: 0.4, ease: "power2.out" }, 0);
-        tl.to(icon, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1)" }, 0.05);
-        tl.to(desc, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.2);
-        tl.to(explore, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1)" }, 0.25);
-        tl.to(el, { minHeight: "260px", duration: 0.35, ease: "power2.out" }, 0);
-        tl.eventCallback("onComplete", () => { currentTimelineRef.current = null; isAnimatingRef.current = false; });
-      };
-
-      const onLeaveTablet = () => {
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-        isAnimatingRef.current = true;
-        const tl = gsap.timeline({ onComplete: () => { gsap.set(icon, { display: "none" }); currentTimelineRef.current = null; isAnimatingRef.current = false; } });
-        currentTimelineRef.current = tl;
-        tl.to([leftB, rightB, desc, explore], { opacity: 0, y: 10, duration: 0.35, ease: "power2.in" }, 0);
-        tl.to(icon, { opacity: 0, scale: 0.8, y: 10, duration: 0.35, ease: "power2.in" }, 0);
-        tl.to(placeholder, { width: 0, duration: 0.35, ease: "power2.in" }, 0.05);
-        tl.to(el, { minHeight: "80px", duration: 0.35, ease: "power2.in" }, 0);
-      };
-
-      el.addEventListener("mouseenter", onEnterTablet);
-      el.addEventListener("mouseleave", onLeaveTablet);
-      const st = ScrollTrigger.create({ trigger: el, start: "top 85%", onEnter: () => { if (!isAnimatingRef.current) onEnterTablet(); }, onLeaveBack: () => { if (!isAnimatingRef.current) onLeaveTablet(); } });
-
-      return () => {
-        el.removeEventListener("mouseenter", onEnterTablet);
-        el.removeEventListener("mouseleave", onLeaveTablet);
-        st.kill();
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-        isAnimatingRef.current = false;
-      };
-    }
-
-    // Mobile: lightweight scroll-triggered reveal (no hover)
-    if (isMobile) {
-      gsap.set([leftB, rightB, desc, explore], { opacity: 0, y: 8 });
-      gsap.set(icon, { opacity: 0, scale: 0.95, display: "none" });
-
-      const st = ScrollTrigger.create({
-        trigger: el,
-        start: "top 95%",
-        onEnter: () => {
-          const tl = gsap.timeline({ onComplete: () => { gsap.set(icon, { display: "none" }); } });
-          gsap.set(icon, { display: "flex" });
-          const measured = icon.getBoundingClientRect?.().width || 80;
-          tl.to(placeholder, { width: measured, duration: 0.35, ease: "power2.out" }, 0);
-          tl.to(icon, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" }, 0);
-          tl.to(desc, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.05);
-          tl.to(explore, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.1);
-        },
-      });
-
-      return () => {
-        st.kill();
-        if (currentTimelineRef.current) { currentTimelineRef.current.kill(); currentTimelineRef.current = null; }
-      };
-    }
-
-  // Desktop animations
-  // initial state: hide interactive pieces
-  // set initial offset for brackets so they can animate into place
-  gsap.set(leftB, { opacity: 0, y: 10, x: -60 });
-  gsap.set(rightB, { opacity: 0, y: 10, x: 60 });
-  gsap.set([desc, explore], { opacity: 0, y: 10 });
-    // placeholder width starts at 0 so words sit together; icon removed from flow
-    gsap.set(placeholderRef.current, { width: 0, display: "inline-block" });
     gsap.set(icon, {
       opacity: 0,
       y: 10,
@@ -252,34 +102,36 @@ function ServiceItem({ service }: { service: Service }) {
       display: "none",
       zIndex: 20,
     });
+    // Start with default height and overflow hidden
+    gsap.set(el, { height: "200px", overflow: "hidden" });
 
-    // compute collapsed height (only header area visible) and set container to that maxHeight/minHeight
-    const headerEl = headerRef.current;
-    if (headerEl) {
-      // ensure overflow hidden and set initial maxHeight and minHeight so collapsed view fits the header
-      // use maxHeight/minHeight (not a capitalized 'Height') and start collapsed
-      gsap.set(el, { maxHeight: "200px", minHeight: "80px", overflow: "hidden" });
-    }
-
-    const onEnter = () => {
-      // Kill any existing timeline to prevent conflicts
+    // Helper to safely kill any running timeline
+    const killCurrent = () => {
       if (currentTimelineRef.current) {
-        currentTimelineRef.current.kill();
+        try {
+          currentTimelineRef.current.kill();
+        } catch (e) {
+          // ignore
+        }
         currentTimelineRef.current = null;
       }
-      
-      // Reset animation state
+    };
+
+    const onEnter = () => {
+      // prevent overlapping animations
+      killCurrent();
       isAnimatingRef.current = true;
-      
+
       const tl = gsap.timeline();
       currentTimelineRef.current = tl;
-      
+
+      // reveal brackets and expand placeholder to measured icon width
       tl.to(
         [leftB, rightB],
         { x: 0, opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
         0
       );
-      // make icon visible then measure it, animate placeholder to that measured width
+      // ensure icon is in layout before measuring
       gsap.set(icon, { display: "flex" });
       const measured = icon.getBoundingClientRect?.().width || 140;
       tl.to(
@@ -287,16 +139,12 @@ function ServiceItem({ service }: { service: Service }) {
         { width: measured, duration: 0.45, ease: "power2.out" },
         0
       );
-      // animate icon from behind
       tl.to(
         icon,
         { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.1)" },
         0.05
       );
-      // dim main title a touch
-  // slightly dim the main title during the interaction
-  tl.to(title, { opacity: 0.9, duration: 0.35, ease: "power2.out" }, 0.15);
-      // reveal description and button
+      tl.to(title, { opacity: 0.9, duration: 0.35, ease: "power2.out" }, 0.15);
       tl.to(
         desc,
         { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
@@ -308,16 +156,13 @@ function ServiceItem({ service }: { service: Service }) {
         0.32
       );
 
-      // expand container to fit full content and raise visible minHeight to 300px (user requested)
-      try {
-        // expand container to reveal content (minHeight raised to 300px as requested)
-        tl.to(el, { maxHeight: "800px", duration: 0.45, ease: "power2.out" }, 0);
-        tl.to(el, { minHeight: "300px", duration: 0.35, ease: "power2.out" }, 0);
-      } catch (e) {
-        // ignore measurement errors
-      }
-      
-      // Clear the timeline reference when animation completes
+      // Auto-height animation: First set height to auto to measure it
+      gsap.set(el, { height: "auto" });
+      const autoHeight = el.offsetHeight;
+      // Then immediately set back to current height and animate to the measured auto height
+      gsap.set(el, { height: "200px" });
+      tl.to(el, { height: autoHeight, duration: 0.45, ease: "power2.out" }, 0);
+
       tl.eventCallback("onComplete", () => {
         currentTimelineRef.current = null;
         isAnimatingRef.current = false;
@@ -325,90 +170,40 @@ function ServiceItem({ service }: { service: Service }) {
     };
 
     const onLeave = () => {
-      // Kill any existing timeline to prevent conflicts
-      if (currentTimelineRef.current) {
-        currentTimelineRef.current.kill();
-        currentTimelineRef.current = null;
-      }
-      
-      // Reset animation state
+      killCurrent();
       isAnimatingRef.current = true;
-      
+
       const tl = gsap.timeline({
         onComplete: () => {
-          // After hide animation completes remove the icon from layout
-          gsap.set(icon, { display: "none" });
+          // hide icon from layout after exit animation
+          try {
+            gsap.set(icon, { display: "none" });
+          } catch (e) {}
           currentTimelineRef.current = null;
           isAnimatingRef.current = false;
         },
       });
-      
       currentTimelineRef.current = tl;
 
+      // Animate all elements and collapse height smoothly
       tl.to(
         [leftB, rightB, desc, explore],
         { opacity: 0, y: 10, duration: 0.35, ease: "power2.in" },
         0
       );
-      // animate icon out visually (fade out) so placeholder can collapse cleanly
-      tl.to(
-        icon,
-        { opacity: 0, scale: 0.8, y: 10, duration: 0.35, ease: "power2.in" },
-        0
-      );
-      // collapse the placeholder width back to 0 to bring words together smoothly
+      tl.to(icon, { opacity: 0, y: 10, duration: 0.35, ease: "power2.in" }, 0);
       tl.to(placeholder, { width: 0, duration: 0.35, ease: "power2.in" }, 0.05);
       tl.to(title, { opacity: 1, duration: 0.35, ease: "power2.out" }, 0);
-
-      // collapse container back to the original collapsed height (restore minHeight too)
-      const headerEl2 = headerRef.current;
-      if (headerEl2) {
-        // collapse container back to the original collapsed height (restore minHeight too)
-        tl.to(
-          el,
-          {
-            maxHeight: "200px",
-            minHeight: "80px",
-            duration: 0.35,
-            ease: "power2.in",
-          },
-          0
-        );
-      }
+      tl.to(el, { height: "200px", duration: 0.35, ease: "power2.in" }, 0.3);
     };
 
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
 
-    // On desktop, also animate when the element scrolls into view
-    let st: ScrollTrigger | null = null;
-    if (!isMobile) {
-      st = ScrollTrigger.create({
-        trigger: el,
-        start: "top 80%",
-        // play the same entry animation used on hover
-        onEnter: () => {
-          // avoid double-running if hover already animating
-          if (!isAnimatingRef.current) onEnter();
-        },
-        // collapse when scrolling back up past the item
-        onLeaveBack: () => {
-          if (!isAnimatingRef.current) onLeave();
-        },
-      });
-    }
-
     return () => {
       el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mouseleave", onLeave);
-      if (st) st.kill();
-      // Clean up any running timeline on unmount
-      if (currentTimelineRef.current) {
-        currentTimelineRef.current.kill();
-        currentTimelineRef.current = null;
-      }
-      // Reset animation state
-      isAnimatingRef.current = false;
+      killCurrent();
     };
   }, []);
 
@@ -418,46 +213,41 @@ function ServiceItem({ service }: { service: Service }) {
   return (
     <div
       ref={containerRef}
-      className="relative border-t h-auto lg:h-[200px] last:border-b overflow-hidden py-8 lg:py-14 px-4"
+      className="relative border-t h-[200px] max-h-[280px] last:border-b overflow-hidden py-14 px-4"
     >
-      <div ref={headerRef} className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-0">
-        <span className="font-poppins text-sm font-medium text-gray-800 lg:w-12">
+      {/* mobile layout: visible on small screens, hidden at md+ */}
+      <div className="md:hidden flex items-center justify-between">
+        <span className="font-poppins text-sm font-medium text-gray-800 w-12 ">
           {service.number}
         </span>
 
-        <div className="flex-1 flex justify-center relative min-h-[100px] lg:min-h-[140px] px-4">
+        <div className="flex-1 flex items-center justify-center relative min-h-[140px] px-4">
           <div
             ref={leftBracketRef}
-            className="hidden md:block absolute left-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
-          >
-            <Bracket side="right" className="w-full h-[200px]" />
-          </div>
+          />
+           
 
           <div
             ref={rightBracketRef}
-            className="hidden md:block absolute right-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
-          >
-            <Bracket side="left" className="w-full h-[200px]" />
-          </div>
+         />
+           
 
-          <div ref={titleRef} className="text-center w-full z-10">
+          <div ref={titleRef} className="text-center w-full  z-10">
             <div
               ref={CrmRef}
-              className="flex flex-col lg:flex-row items-center -top-8 lg:-top-14 justify-center gap-2 lg:gap-4 relative"
+              className="flex items-center justify-center gap-4 -top-14 relative"
             >
-              <span className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[120px] text-[#1F1F1F] font-[500]">
-                {leftWord}
-              </span>
+              <span className="text-[120px] lg:text-[120px]">{leftWord}</span>
 
               {/* placeholder controls spacing between words; icon is centered absolutely inside it */}
               <div
                 ref={placeholderRef}
-                className="inline-block h-[60px] lg:h-[100px] relative"
+                className="inline-block h-[100px] relative"
                 aria-hidden
               >
                 <div
                   ref={iconRef}
-                  className="w-[60px] h-[60px] lg:w-[100px] lg:h-[100px] rounded-xl overflow-hidden bg-transparent shadow-lg flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                  className="w-[100px] h-[100px] rounded-xl overflow-hidden bg-transparent shadow-lg flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                 >
                   {service.img && (
                     <img
@@ -467,31 +257,147 @@ function ServiceItem({ service }: { service: Service }) {
                     />
                   )}
                 </div>
+                {/* fallback static image for md screens (hidden on lg to avoid duplicate with animated icon) */}
+                {service.img && (
+                  <img
+                    src={service.img}
+                    alt={service.title}
+                    className="hidden md:block lg:hidden w-[100px] h-[100px] rounded-xl overflow-hidden object-cover shadow-lg"
+                  />
+                )}
               </div>
 
-              <span className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[120px] text-[#1F1F1F] font-[500]">
-                {rightWords}
-              </span>
+              <span className="text-[120px] lg:text-[120px]">{rightWords}</span>
             </div>
           </div>
         </div>
 
-        <span className="font-poppins text-sm font-medium text-gray-800 lg:w-24 text-center lg:text-right">
+        <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
           / See more
         </span>
       </div>
 
-      <div className="text-center relative lg:absolute flex-col w-[100%] lg:bottom-6 flex justify-center items-center px-4 font-poppins mt-4 lg:mt-0">
-        <div ref={descRef} className="text-sm lg:text-base text-[#1F1F1F]">
-          {service.description}
-        </div>
+      <div className="md:hidden mt-6 text-center px-4 font-poppins">
+        <div ref={descRef} />
         <div className="mt-4">
-          <button
-            ref={exploreRef}
-            className="inline-flex items-center px-4 lg:px-6 py-2 bg-purple-200 text-purple-800 rounded-full font-medium text-sm lg:text-base"
-          >
-            Explore
-          </button>
+          <button ref={exploreRef}>{/* Explore */}</button>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* responsive  */}
+
+        {/* md-only layout: hidden on mobile and lg, visible only on md (768px - 1023px). A compact card-style static design */}
+        <div className="hidden md:flex lg:hidden items-center gap-4 bg-white/5 p-4 rounded-lg">
+          <div className="w-28 flex-shrink-0">
+            {service.img && (
+              <img
+                src={service.img}
+                alt={service.title}
+                className="w-28 h-20 object-cover rounded-md shadow-sm"
+              />
+            )}
+          </div>
+
+          <div className="flex-1">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-sm text-gray-500 font-medium">{service.number}</div>
+                <div className="mt-1 font-poppins font-semibold text-2xl leading-tight">
+                  <span className="block text-2xl">
+                    {leftWord} <span className="inline-block ml-2 text-2xl">{rightWords}</span>
+                  </span>
+                </div>
+              </div>
+              <div className="text-sm text-gray-400">/ See more</div>
+            </div>
+
+            <p className="mt-3 text-sm text-gray-600 font-poppins">{service.description}</p>
+          </div>
+        </div>
+
+        {/* lg layout: hidden on mobile/md, visible from lg and up. Keeps animated icon/structure */}
+        <div className="hidden lg:flex items-center justify-between">
+        <span className="font-poppins text-sm font-medium text-gray-800 w-12 ">
+          {service.number}
+        </span>
+
+        <div className="flex-1 flex items-center justify-center relative min-h-[140px] px-4">
+          <div
+            ref={leftBracketRef}
+            className="absolute left-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
+          />
+            {/* <Bracket side="right" className="w-full h-[200px]" />
+          </div> */}
+
+          <div
+            ref={rightBracketRef}
+            className="absolute right-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
+          />
+            {/* <Bracket side="left" className="w-full h-[200px]" />
+          </div> */}
+
+          <div ref={titleRef} className="text-center w-full  z-10">
+            <div
+              ref={CrmRef}
+              className="flex items-center justify-center gap-4 -top-14 relative"
+            >
+              <span className="text-[120px] lg:text-[120px]">{leftWord}</span>
+
+              {/* placeholder controls spacing between words; icon is centered absolutely inside it */}
+              <div
+                ref={placeholderRef}
+                className="inline-block h-[100px] relative"
+                aria-hidden
+              >
+                <div
+                  ref={iconRef}
+                  className="w-[100px] h-[100px] rounded-xl overflow-hidden bg-transparent shadow-lg flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                >
+                  {service.img && (
+                    <img
+                      src={service.img}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+                {/* fallback static image for md screens (hidden on lg to avoid duplicate with animated icon) */}
+                {service.img && (
+                  <img
+                    src={service.img}
+                    alt={service.title}
+                    className="hidden md:block lg:hidden w-[100px] h-[100px] rounded-xl overflow-hidden object-cover shadow-lg"
+                  />
+                )}
+              </div>
+
+              <span className="text-[120px] lg:text-[120px]">{rightWords}</span>
+            </div>
+          </div>
+        </div>
+
+        <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
+          / See more
+        </span>
+      </div>
+
+      <div className="hidden lg:block mt-6 text-center px-4 font-poppins">
+        <div ref={descRef} />
+        <div className="mt-4">
+          <button ref={exploreRef}>{/* Explore */}</button>
         </div>
       </div>
     </div>
@@ -500,9 +406,9 @@ function ServiceItem({ service }: { service: Service }) {
 
 export function OurServices() {
   return (
-    <section id="service" className="py-20 lg:py-40 font-[Duck-cry]">
-      <div className="max-w-[100vw] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="font-poppins flex flex-col lg:flex-row justify-between w-full lg:w-[80%] gap-4 lg:gap-0">
+    <section  className="pt-2 lg:pt-10 font-[Duck-cry]">
+      <div className="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="font-poppins flex flex-col lg:flex-row justify-between w-full lg:w-[80%] gap-4 lg:gap-0 mx-auto">
           <div className="flex items-center gap-4 mb-6">
             <span className="font-poppins">/ Our Services</span>
             <div className="flex-1 h-px bg-border"></div>

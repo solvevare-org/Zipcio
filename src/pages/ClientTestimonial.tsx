@@ -1,31 +1,33 @@
+import propert_1 from "../assets/property_1.jpg"
+import propert_2 from "../assets/property_2.jpg"
+import propert_3 from "../assets/property_3.jpg"
+
+
 const ClientTestimonial = () => {
   let TestimonialDiv = [
     {
       id: 1,
-      name: "Joe Tenney",
-      company: "Woobie",
-      logo: "https://zipcio.com/hubfs/WOOBIE-LOGO-GRN.webp",
+      name: "Performance ",
+      company: "Visibility",
+      logo: propert_1,
       testimonial:
-        "“If you are looking to migrate your current CRM or start out in HubSpot, bringing on Cory and his team is a no brainer. Thank you Zipcio!”",
-        background: "#B8A3F8",
+        "“AI guides new agents through daily tasks, reducing training time and accelerating productivity. Brokerages save money on onboarding while ensuring that agents deliver consistent results from their very first day in the system.”",
     },
     {
       id: 2,
-      name: "Jason Morena",
-      company: "Mike Posner",
-      logo: "https://zipcio.com/hubfs/mp-logo-script-wht.webp",
+      name: "Compliance & ",
+      company: "Security",
+      logo: propert_2,
       testimonial:
-        "“If you are looking to migrate your current CRM or start out in HubSpot, bringing on Cory and his team is a no brainer. Thank you Zipcio!”",
-        background: "#69D965",
+        "“NuHelixX records every step of the transaction and integrates with secure e-signature platforms. Brokerages protect their reputation, maintain regulatory compliance, and reduce costly risks with built-in transparency and accountability.”",
     },
     {
       id: 3,
-      name: "Craig Bender",
-      company: "InsureU2",
-      logo: "https://zipcio.com/hubfs/Screenshot%202025-02-20%20at%2010-25-45%20PM.webp",
+      name: "Lower Training",
+      company: " Costs",
+      logo: propert_3,
       testimonial:
-        "“If you are looking to migrate your current CRM or start out in HubSpot, bringing on Cory and his team is a no brainer. Thank you Zipcio!”",
-        background: "#EB8025",
+        "“Brokers gain real-time dashboards that reveal agent activity, pipeline health, and commission tracking. Every deal is visible at a glance, helping leaders make informed decisions quickly and identify growth opportunities across the entire brokerage.”",
     },
   ];
 
@@ -50,10 +52,9 @@ const ClientTestimonial = () => {
 
           {/* use inline style for dynamic background color */}
           <div
-            style={{ background: item.background }}
-            className="h-[150px] lg:h-[250px] rounded-2xl border w-full lg:w-[200px] -top-[25px] lg:-top-[50px] relative flex justify-center items-center mx-auto lg:mx-0"
+            className="h-[150px] lg:h-[250px] rounded-2xl w-full lg:w-[200px] -top-[25px] lg:-top-[50px] relative flex justify-center items-center mx-auto lg:mx-0"
           >
-            <img src={item.logo} alt="" className="h-[25px] lg:h-[35px]" />
+            <img src={item.logo} alt="" className="h-full lg:h-full rounded-2xl w-auto object-cover" />
           </div>
 
           <p className="font-[500] text-sm lg:text-base">{item.testimonial}</p>

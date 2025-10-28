@@ -102,7 +102,7 @@ export default function Navbar() {
   return (
     // raise z-index so the header stays on top of any pinned/paneled content
     <>
-      <header ref={headerRef} className="flex items-center justify-between px-10 py-6 bg-[#f5f5f5] border-b border-gray-100">
+      <header ref={headerRef} className="flex items-center justify-between px-10 py-6 bg-[#f5f5f5]">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <div>

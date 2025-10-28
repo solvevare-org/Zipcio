@@ -50,32 +50,7 @@ export default function Header() {
                 </button>
               </div>
 
-              {/* Rating */}
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                    A
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                    B
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white font-bold text-sm">
-                    C
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                    <span className="ml-2 font-bold text-gray-900">4.9</span>
-                  </div>
-                  <p className="text-sm text-gray-600">Over 80+ reviews</p>
-                </div>
-              </div>
+            
 
               {/* CTA Button */}
             </div>

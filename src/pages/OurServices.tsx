@@ -19,29 +19,29 @@ type Service = {
 const services: Service[] = [
   {
     id: "01",
-    number: "/01",
-    title: "CRM CONSULTANT",
+    number: "01",
+    title: "Agent Experience",
     description: "Great for businesses needing optimal guidance.",
     img: property_1,
   },
   {
     id: "02",
-    number: "/02",
-    title: "CRM OPTIMIZER",
+    number: "02",
+    title: "Client Experience",
     description: "Ideal for companies that require continuous project support.",
     img: property_2,
   },
   {
     id: "03",
-    number: "/03",
-    title: "CRM LEADER",
+    number: "03",
+    title: "Analytics & Growth",
     description: "Ideal for companies requiring ownership of HubSpot CRM.",
     img: property_3,
   },
   {
     id: "04",
-    number: "/04",
-    title: "Bespoke Marketing",
+    number: "04",
+    title: "Technology Innovation",
     description: "Ideal for companies requiring ownership of HubSpot CRM.",
     img: property_1,
   },
@@ -216,7 +216,7 @@ function ServiceItem({ service }: { service: Service }) {
     >
       {/* mobile layout: visible on small screens, hidden at md+ */}
       <div className="md:hidden flex items-center justify-between">
-        <span className="font-poppins text-sm font-medium text-gray-800 w-12 ">
+        <span className="font-poppins text-sm font-medium  w-12 ">
           {service.number}
         </span>
 
@@ -271,9 +271,9 @@ function ServiceItem({ service }: { service: Service }) {
           </div>
         </div>
 
-        <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
+        {/* <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
           / See more
-        </span>
+        </span> */}
       </div>
 
       <div className="md:hidden mt-6 text-center px-4 font-poppins">
@@ -313,14 +313,14 @@ function ServiceItem({ service }: { service: Service }) {
           <div className="flex-1">
             <div className="flex items-start justify-between">
               <div>
-                <div className="text-sm text-gray-500 font-medium">{service.number}</div>
+                <div className="text-sm font-medium">{service.number}</div>
                 <div className="mt-1 font-poppins font-semibold text-2xl leading-tight">
                   <span className="block text-2xl">
                     {leftWord} <span className="inline-block ml-2 text-2xl">{rightWords}</span>
                   </span>
                 </div>
               </div>
-              <div className="text-sm text-gray-400">/ See more</div>
+              {/* <div className="text-sm text-gray-400">/ See more</div> */}
             </div>
 
             <p className="mt-3 text-sm text-gray-600 font-poppins">{service.description}</p>
@@ -388,9 +388,9 @@ function ServiceItem({ service }: { service: Service }) {
           </div>
         </div>
 
-        <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
+        {/* <span className="font-poppins text-sm font-medium text-gray-800 w-24 text-right">
           / See more
-        </span>
+        </span> */}
       </div>
 
       <div className="hidden lg:block mt-6 text-center px-4 font-poppins">
@@ -409,7 +409,7 @@ export function OurServices() {
       <div className="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="font-poppins flex flex-col lg:flex-row justify-between w-full lg:w-[80%] gap-4 lg:gap-0 mx-auto">
           <div className="flex items-center gap-4 mb-6">
-            <span className="font-poppins">/ Our Services</span>
+            {/* <span className="font-poppins">/ Our Services</span> */}
             <div className="flex-1 h-px bg-border"></div>
           </div>
           <h2

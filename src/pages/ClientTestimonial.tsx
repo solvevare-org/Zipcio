@@ -11,7 +11,7 @@ const ClientTestimonial = () => {
       company: "Visibility",
       logo: propert_1,
       testimonial:
-        "“AI guides new agents through daily tasks, reducing training time and accelerating productivity. Brokerages save money on onboarding while ensuring that agents deliver consistent results from their very first day in the system.”",
+      "“Brokers gain real-time dashboards that reveal agent activity, pipeline health, and commission tracking. Every deal is visible at a glance, helping leaders make informed decisions quickly and identify growth opportunities across the entire brokerage.”"
     },
     {
       id: 2,
@@ -27,7 +27,8 @@ const ClientTestimonial = () => {
       company: " Costs",
       logo: propert_3,
       testimonial:
-        "“Brokers gain real-time dashboards that reveal agent activity, pipeline health, and commission tracking. Every deal is visible at a glance, helping leaders make informed decisions quickly and identify growth opportunities across the entire brokerage.”",
+        "“AI guides new agents through daily tasks, reducing training time and accelerating productivity. Brokerages save money on onboarding while ensuring that agents deliver consistent results from their very first day in the system.”",
+        
     },
   ];
 
@@ -36,13 +37,13 @@ const ClientTestimonial = () => {
       <div className="text-center mt-[40px] lg:mt-[70px]">
         <h1 className="font-[Duck-cry] leading-none text-[60px] sm:text-[80px] lg:text-[120px]">
           CLIENT <br />
-          TESTIMONIAL
+          EXPERIENCE
         </h1>
       </div>
       <div>
       {TestimonialDiv.map((item) => (
         <div key={item.id} className="grid grid-cols-1 lg:grid-cols-4 font-[poppins] mt-[30px] lg:mt-[50px] border-t gap-4 lg:gap-0">
-          <p className="text-gray-600 text-sm lg:text-base">/0{item.id}</p>
+          <p className="text-gray-600 text-sm lg:text-base">0{item.id}</p>
 
           <div className="font-[500] text-sm lg:text-base">
             <div>{item.name}</div>

@@ -36,7 +36,7 @@ const ClientTestimonial = () => {
     <section className="min-h-[100vh] flex flex-col gap-[100px] lg:gap-[200px] px-16 ">
       <div className="text-center mt-[40px] lg:mt-[70px]">
         <h1 className="font-[Duck-cry] leading-none text-[60px] sm:text-[80px] lg:text-[120px]">
-          CLIENT <br />
+          BROKERAGE<br />
           EXPERIENCE
         </h1>
       </div>

@@ -416,7 +416,7 @@ export function OurServices() {
             className="experts-h2 font-poppins text-lg lg:text-[1.2rem]"
             data-testid="services-title"
           >
-            We are experts in revenue operations.
+            {/* We are experts in revenue operations. */}
           </h2>
         </div>
 

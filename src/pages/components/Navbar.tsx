@@ -130,7 +130,7 @@ export default function Navbar() {
           Analytics
         </a>
         <a href="#services" onClick={(e) => handleNav(e, 'services')} className="text-gray-700 hover:text-gray-900 font-medium">
-          Services
+          Experience
         </a>
         <a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="text-gray-700 hover:text-gray-900 font-medium">
           Contact Us
@@ -148,7 +148,7 @@ export default function Navbar() {
           <nav className="flex flex-col p-4 gap-2">
             <button onClick={(e) => { setMobileOpen(false); handleNav(e as any, 'home'); }} className="text-left px-4 py-3 rounded-lg hover:bg-gray-100">Home</button>
             <button onClick={(e) => { setMobileOpen(false); handleNav(e as any, 'analytics'); }} className="text-left px-4 py-3 rounded-lg hover:bg-gray-100">Analytics</button>
-            <button onClick={(e) => { setMobileOpen(false); handleNav(e as any, 'services'); }} className="text-left px-4 py-3 rounded-lg hover:bg-gray-100">Services</button>
+            <button onClick={(e) => { setMobileOpen(false); handleNav(e as any, 'services'); }} className="text-left px-4 py-3 rounded-lg hover:bg-gray-100">Experience</button>
             <button onClick={(e) => { setMobileOpen(false); handleNav(e as any, 'contact'); }} className="text-left px-4 py-3 rounded-lg hover:bg-gray-100">Contact Us</button>
           </nav>
         </div>

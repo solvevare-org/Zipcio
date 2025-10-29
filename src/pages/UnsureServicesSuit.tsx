@@ -143,7 +143,6 @@ export default function UnsureServicesSuit() {
           </tr>
         </thead>
         <tbody>
-          {/* Static rows to match the screenshot content */}
           {(
             [
               {

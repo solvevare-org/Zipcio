@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import property_1 from "../assets/property_2.jpg";
-import { OurServices } from "./OurServices";
+import ClientTestimonial from "./ClientTestimonial";
 
 export function Bracket({
   side = "left",
@@ -55,10 +55,7 @@ function HeroSection() {
       const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
       const isMobile = window.innerWidth < 768;
 
-      // If NOT desktop, skip heavy animations and show static content instead.
-      // This makes tablet/mobile a static site (no GSAP pin/scroll animations).
       if (!isDesktop) {
-        // reset transforms / reveal layers so the layout is static and visible
         try {
           gsap.set([layer1.current, layer2.current, layer3.current], {
             clearProps: "all",
@@ -80,15 +77,11 @@ function HeroSection() {
             y: 0,
             opacity: 1,
           });
-        } catch (e) {
-          // ignore when refs are null during hydration
-        }
+        } catch (e) {}
 
-        // Don't create ScrollTriggers or pinning on smaller screens
         return;
       }
 
-      // Desktop animations (1024px+)
       if (isDesktop) {
         gsap.set(layer1.current, { x: 0, rotation: 4 });
         gsap.set(layer2.current, { x: 0, rotation: -2 });
@@ -99,22 +92,19 @@ function HeroSection() {
         const cardSpacing = 290;
         const horizontalDistance = window.innerWidth;
 
-        // Increase scroll height so the sequence can play fully (hero down, then card slide, then horizontal)
         const totalScrollHeight = window.innerHeight * 8;
 
         const master = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: () => "+=" + totalScrollHeight, // Use the new, higher scroll height
-            scrub: 1, // longer scrub for smoother, eased mapping from scroll to timeline
+            end: () => "+=" + totalScrollHeight,
+            scrub: 1,
             pin: true,
           },
         });
 
-        // headline: animate from below into view when it enters
         if (headlineRef.current) {
-          // create a ScrollTrigger that starts a fresh tween on each enter so a delay runs every time
           let headlineTween: gsap.core.Tween | null = null;
 
           ScrollTrigger.create({
@@ -137,14 +127,8 @@ function HeroSection() {
           });
         }
 
-        // === Phase 1: Vertical Movement (move whole hero down) ===
-        // Move card stack down distance used for both hero content and cards
-        // const verticalMove = window.innerHeight * 1.5; // distance to move content off-screen
-
-        // counter-shift the stack up so it visually stays while hero content moves down
         master.set(stackRef.current, { y: 0 }, 0);
 
-        // Move the main hero content down (including the large text) first
         master.to(
           heroContentRef.current,
           {
@@ -155,16 +139,13 @@ function HeroSection() {
           0
         );
 
-        // delay the stack/card vertical movement by 2 seconds so it waits before sliding
-        const cardDelay = 0.5; // seconds
-        // animate the whole stack group down (this moves card + layers together)
+        const cardDelay = 0.5;
         master.to(
           stackRef.current,
           { y: 450, scale: 0.9, ease: "power1.out" },
           0
         );
 
-        // spread layers horizontally at the same time (no vertical y here)
         master.to(
           layer1.current,
           { x: cardSpacing * 1, rotation: 0, left: 0, ease: "power1.out" },
@@ -181,7 +162,6 @@ function HeroSection() {
           cardDelay
         );
 
-        // subtle fade while sliding
         master.to(cardRef.current, { ease: "power1.out" }, cardDelay);
 
         master.to(
@@ -194,14 +174,11 @@ function HeroSection() {
         );
       }
 
-      // Tablet animations (768px - 1023px) - optimized for tablet experience
       if (isTablet) {
-        // Disable complex desktop animations but keep some visual effects
         gsap.set([layer1.current, layer2.current, layer3.current], {
           opacity: 0,
         });
 
-        // Simple tablet headline animation
         if (headlineRef.current) {
           ScrollTrigger.create({
             trigger: headlineRef.current,
@@ -221,7 +198,6 @@ function HeroSection() {
           });
         }
 
-        // Tablet card animation - simpler than desktop but more than mobile
         if (stackRef.current) {
           ScrollTrigger.create({
             trigger: stackRef.current,
@@ -241,20 +217,13 @@ function HeroSection() {
             },
           });
         }
-
-        // Tablet: keep visual entrance animations only. We intentionally
-        // DO NOT animate innerRef.x on tablet so scrolling remains vertical.
       }
-
-      // Mobile animations (under 768px) - simplest and most performant
       if (isMobile) {
-        // Hide desktop layers completely on mobile
         gsap.set([layer1.current, layer2.current, layer3.current], {
           opacity: 0,
           display: "none",
         });
 
-        // Simple fade-in animation for mobile headline
         if (headlineRef.current) {
           ScrollTrigger.create({
             trigger: headlineRef.current,
@@ -293,7 +262,6 @@ function HeroSection() {
             },
           });
         }
-
       }
     }, containerRef);
 
@@ -302,55 +270,12 @@ function HeroSection() {
 
   return (
     <main
-      id="analytics"
       ref={containerRef}
       className="min-h-[100vh] overflow-x-hidden lg:overflow-hidden"
     >
-   
       <div ref={innerRef} className="flex flex-col lg:flex-row">
         <div className="w-full lg:w-screen lg:h-screen flex-shrink-0">
           <div className="min-h-screen bg-[#f5f5f5]">
-            {/* <header className=" flex items-start justify-between px-4 md:px-8 md:py-6">
-              <div className="text-2xl md:text-3xl font-bold tracking-tight">
-                ZIPGIO
-              </div>
-
-              <nav className="hidden lg:flex items-center gap-2">
-                <button className="px-6 xl:px-8 py-3 xl:py-4 rounded-full text-gray-800 hover:bg-gray-200 transition-colors text-sm xl:text-base">
-                  About
-                </button>
-                <button className="px-6 xl:px-8 py-3 xl:py-4 rounded-full text-gray-800 hover:bg-gray-200 transition-colors flex items-center gap-2 text-sm xl:text-base">
-                  Services
-                  <ChevronDown size={20} />
-                </button>
-                <button className="px-6 xl:px-8 py-3 xl:py-4 rounded-full text-gray-800 hover:bg-gray-200 transition-colors text-sm xl:text-base">
-                  Resources
-                </button>
-                <button className="px-6 xl:px-8 py-3 xl:py-4 rounded-full text-gray-800 hover:bg-gray-200 transition-colors text-sm xl:text-base">
-                  Packages
-                </button>
-              </nav>
-
-              <div className="hidden md:flex items-center gap-3">
-                <button className="px-4 md:px-6 xl:px-8 py-3 xl:py-4  bg-[#BCBF4F] hover:bg-[#00d066] text-black font-medium rounded-full transition-colors text-sm xl:text-base">
-                  Book a call
-                </button>
-                <button className="w-12 h-12 xl:w-14 xl:h-14  bg-[#BCBF4F] hover:bg-[#00d066] rounded-full flex items-center justify-center transition-colors">
-                  <ArrowUpRight
-                    size={20}
-                    className="text-black xl:w-6 xl:h-6"
-                  />
-                </button>
-              </div>
-
-              <button
-                className="lg:hidden p-2"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                <Menu size={24} className="text-gray-800" />
-              </button>
-            </header> */}
-
             {mobileMenuOpen && (
               <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4">
                 <nav className="flex flex-col gap-2">
@@ -472,19 +397,16 @@ function HeroSection() {
                     <div className="lg:hidden">
                       <div className="flex text-center items-start gap-2 mb-4">
                         <h1 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter flex-1">
-                          The DNA of Every <br />Deal in Action
+                          The DNA of Every <br />
+                          Deal in Action
                         </h1>
                       </div>
 
                       <div className="flex items-start gap-2 mb-6">
-                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter">
-                          
-                        </h2>
+                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter"></h2>
                       </div>
                       <div className="flex items-start gap-2">
-                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter flex-1">
-                        
-                        </h2>
+                        <h2 className="text-[40px] sm:text-[50px] md:text-[70px] font-black leading-none tracking-tighter flex-1"></h2>
                       </div>
 
                       <div className="mb-6 flex justify-center">
@@ -554,11 +476,11 @@ function HeroSection() {
                 </div>
                 <div ref={headlineRef} className="transform-gpu opacity-[0]">
                   <p>
-                    <span className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-[Duck-cry] leading-none font-[600]">
+                    <span id="analytics" className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-[Duck-cry] leading-none font-[600]">
                       YOUR <br />
                       CRM <br />
                       <div className="flex gap-2 sm:gap-4 items-center leading-none">
-                        <p>ON</p> <br />
+                        <p >ON</p> <br />
                         <img
                           src="https://43675023.fs1.hubspotusercontent-na1.net/hubfs/43675023/raw_assets/public/ZipcioTheme/img/rocket.svg"
                           alt="Steroids"
@@ -575,7 +497,7 @@ function HeroSection() {
         </div>
         {/* Second Screen */}
         <section className="w-full lg:w-screen bg-[#F5F5F5] min-h-[100vh] flex flex-col flex-shrink-0">
-          <OurServices/>
+          <ClientTestimonial />
         </section>
       </div>
     </main>

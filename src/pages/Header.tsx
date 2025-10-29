@@ -1,7 +1,5 @@
 "use client";
 
-import { Star } from "lucide-react";
-import Navbar from "./components/Navbar";
 import VideoUrl from "../assets/HeaderVideo.mp4";
 import Property_1 from "../assets/property_1.jpg";
 // import Property_2 from "../assets/property_2.jpg";
@@ -10,7 +8,7 @@ import Property_3 from "../assets/Dashboard.png";
 export default function Header() {
   return (
     <section id="home">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="px-8 py-1 pb-20 bg-[#f5f5f5] font-[poppins]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -83,9 +81,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-24">
-            {/* Left - Mobile Mockup */}
             <div className="flex min-h-[28rem] w-[100%] justify-center overflow-hidden rounded-2xl">
               <img
                 src={Property_3}
@@ -94,9 +90,7 @@ export default function Header() {
               />
             </div>
 
-            {/* Right - Stats */}
             <div className="space-y-8">
-              {/* Stats */}
               <div className="space-y-6 flex items-center justify-center ">
                 <br />
                 <div className="flex flex-col gap-8">

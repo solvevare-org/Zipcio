@@ -47,7 +47,6 @@ const services: Service[] = [
   },
 ];
 
-
 function ServiceItem({ service }: { service: Service }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
@@ -212,7 +211,7 @@ function ServiceItem({ service }: { service: Service }) {
   return (
     <div
       ref={containerRef}
-      className="relative border-t h-[200px] max-h-[280px] last:border-b overflow-hidden py-14 px-4"
+      className="relative border-t h-[200px] max-h-[270px] last:border-b overflow-hidden py-14 px-4"
     >
       {/* mobile layout: visible on small screens, hidden at md+ */}
       <div className="md:hidden flex items-center justify-between">
@@ -221,15 +220,9 @@ function ServiceItem({ service }: { service: Service }) {
         </span>
 
         <div className="flex-1 flex items-center justify-center relative min-h-[140px] px-4">
-          <div
-            ref={leftBracketRef}
-          />
-           
+          <div ref={leftBracketRef} />
 
-          <div
-            ref={rightBracketRef}
-         />
-           
+          <div ref={rightBracketRef} />
 
           <div ref={titleRef} className="text-center w-full  z-10">
             <div
@@ -283,52 +276,44 @@ function ServiceItem({ service }: { service: Service }) {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       {/* responsive  */}
 
-        {/* md-only layout: hidden on mobile and lg, visible only on md (768px - 1023px). A compact card-style static design */}
-        <div className="hidden md:flex lg:hidden items-center gap-4 bg-white/5 p-4 rounded-lg">
-          <div className="w-28 flex-shrink-0">
-            {service.img && (
-              <img
-                src={service.img}
-                alt={service.title}
-                className="w-28 h-20 object-cover rounded-md shadow-sm"
-              />
-            )}
-          </div>
-
-          <div className="flex-1">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="text-sm font-medium">{service.number}</div>
-                <div className="mt-1 font-poppins font-semibold text-2xl leading-tight">
-                  <span className="block text-2xl">
-                    {leftWord} <span className="inline-block ml-2 text-2xl">{rightWords}</span>
-                  </span>
-                </div>
-              </div>
-              {/* <div className="text-sm text-gray-400">/ See more</div> */}
-            </div>
-
-            <p className="mt-3 text-sm text-gray-600 font-poppins">{service.description}</p>
-          </div>
+      {/* md-only layout: hidden on mobile and lg, visible only on md (768px - 1023px). A compact card-style static design */}
+      <div className="hidden md:flex lg:hidden items-center gap-4 bg-white/5 p-4 rounded-lg">
+        <div className="w-28 flex-shrink-0">
+          {service.img && (
+            <img
+              src={service.img}
+              alt={service.title}
+              className="w-28 h-20 object-cover rounded-md shadow-sm"
+            />
+          )}
         </div>
 
-        {/* lg layout: hidden on mobile/md, visible from lg and up. Keeps animated icon/structure */}
-        <div className="hidden lg:flex items-center justify-between">
+        <div className="flex-1">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="text-sm font-medium">{service.number}</div>
+              <div className="mt-1 font-poppins font-semibold text-2xl leading-tight">
+                <span className="block text-2xl">
+                  {leftWord}{" "}
+                  <span className="inline-block ml-2 text-2xl">
+                    {rightWords}
+                  </span>
+                </span>
+              </div>
+            </div>
+            {/* <div className="text-sm text-gray-400">/ See more</div> */}
+          </div>
+
+          <p className="mt-3 text-sm text-gray-600 font-poppins">
+            {service.description}
+          </p>
+        </div>
+      </div>
+
+      {/* lg layout: hidden on mobile/md, visible from lg and up. Keeps animated icon/structure */}
+      <div className="hidden lg:flex items-center justify-between">
         <span className="font-poppins text-sm font-medium text-gray-800 w-12 ">
           {service.number}
         </span>
@@ -338,14 +323,14 @@ function ServiceItem({ service }: { service: Service }) {
             ref={leftBracketRef}
             className="absolute left-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
           />
-            {/* <Bracket side="right" className="w-full h-[200px]" />
+          {/* <Bracket side="right" className="w-full h-[200px]" />
           </div> */}
 
           <div
             ref={rightBracketRef}
             className="absolute right-8 top-1/2 -translate-y-1/2 text-[160px] font-black text-purple-200 pointer-events-none"
           />
-            {/* <Bracket side="left" className="w-full h-[200px]" />
+          {/* <Bracket side="left" className="w-full h-[200px]" />
           </div> */}
 
           <div ref={titleRef} className="text-center w-full  z-10">
@@ -393,10 +378,23 @@ function ServiceItem({ service }: { service: Service }) {
         </span> */}
       </div>
 
-      <div className="hidden lg:block mt-6 text-center px-4 font-poppins">
+{/* <div className="hidden lg:block -top-10 relative w-full text-center px-4 font-poppins">
+        <div ref={descRef} className="text-center w-full flex justify-center items-center">
+          <div className="w-[50%]">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Cumque sint
+          sed accusamus. Eligendi id a ipsam omnis at ipsum architecto ipsa
+          praesentium nihil dolor nulla, laborum expedita alias sequi accusamus?
+          </div>
+        </div>
+        <div className="mt-4">
+          <button ref={exploreRef} className="bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-white py-2 px-4 rounded-full">Explore </button>
+        </div>
+      </div> */}
+
+      <div className="hidden lg:block -top-10 relative w-full text-center px-4 font-poppins">
         <div ref={descRef} />
         <div className="mt-4">
-          <button ref={exploreRef}>{/* Explore */}</button>
+          <button ref={exploreRef}> </button>
         </div>
       </div>
     </div>

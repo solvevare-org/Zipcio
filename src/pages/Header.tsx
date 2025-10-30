@@ -43,7 +43,7 @@ export default function Header() {
               </div>
               <br />
               <div>
-                <button className="bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-white px-8 py-3 rounded-full font-medium">
+                <button onClick={() => (window.location.href = "http://nuhelixxre.com/login")} className="bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-white px-8 py-3 rounded-full font-medium">
                   Book A Demo
                 </button>
               </div>
@@ -110,7 +110,7 @@ export default function Header() {
                   </p>
 
                   <div className="mb-2">
-                    <button className="bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-white px-8 py-3 rounded-full font-medium">
+                    <button onClick={() => (window.location.href = "http://nuhelixxre.com/login")} className="bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-white px-8 py-3 rounded-full font-medium">
                       Contact Us
                     </button>
                   </div>

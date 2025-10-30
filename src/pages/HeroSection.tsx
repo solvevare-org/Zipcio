@@ -460,7 +460,7 @@ function HeroSection() {
                         </p>
 
                         <div className="flex items-center gap-3">
-                          <button className="px-6 md:px-8 py-3 md:py-4  bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-black font-medium rounded-full transition-colors text-sm md:text-base">
+                          <button onClick={() => (window.location.href = "http://nuhelixxre.com/login")} className="px-6 md:px-8 py-3 md:py-4  bg-[#BCBF4F] hover:bg-[#bbbf4fc8] text-black font-medium rounded-full transition-colors text-sm md:text-base">
                             Get started
                           </button>
                           <button className="w-12 h-12 md:w-14 md:h-14  bg-[#BCBF4F] hover:bg-[#bbbf4fc8] rounded-full flex items-center justify-center transition-colors">

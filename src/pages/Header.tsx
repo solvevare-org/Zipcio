@@ -56,13 +56,13 @@ export default function Header() {
             {/* Right Content - 3D Coin & Card */}
             <div className="min-h-[400px] gap-4 border-none grid grid-cols-2">
               <div className=" rounded-2xl overflow-hidden border-none">
-                {/* <video
+                <video
                   src={VideoUrl}
                   loop
                   autoPlay
                   muted
                   className="h-[100%] rounded-2xl overflow-hidden w-full object-cover"
-                /> */}
+                />
               </div>
 
               <div className="flex flex-col items-center">
